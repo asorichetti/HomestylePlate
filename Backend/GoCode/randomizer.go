@@ -104,22 +104,22 @@ func main() {
 	// Print results for each area of meal options
 	fmt.Println("\nYour selected meals for the week are the following:")
 	if len(selectedHF) > 0 {
-		fmt.Println("🍽️ Hello Fresh Meals:")
+		fmt.Println("Hello Fresh Meals:")
 		for _, meal := range selectedHF {
 			fmt.Println("-", meal)
 		}
 	} else {
 		//Error message for if no meals are selected
-		fmt.Println("⚠️ No Hello Fresh meals selected.")
+		fmt.Println("No Hello Fresh meals selected.")
 	}
 
 	if len(selectedP3) > 0 {
-		fmt.Println("\n🥗 Paprika3 Meals:")
+		fmt.Println("\nPaprika3 Meals:")
 		for _, meal := range selectedP3 {
 			fmt.Println("-", meal)
 		}
 	} else {
 		//Error message for if no meals are selected
-		fmt.Println("⚠️ No Paprika3 meals selected.")
+		fmt.Println("No Paprika3 meals selected.")
 	}
 }
