@@ -2,9 +2,12 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/rand"
+	"net/http"
+	"strconv"
 	"time"
 
 	_ "modernc.org/sqlite"
@@ -13,13 +16,19 @@ import (
 // Database path
 const dbPath = "../Meals.db"
 
+// JSON response structure
+type Meal struct {
+	Name   string `json:"name"`
+	Rating int    `json:"rating"`
+}
+
 // getMeals retrieves meals and ratings from a table (handles both HF_Meal and P3_Meal)
-func getMeals(db *sql.DB, table string) (map[string]int, error) {
+func getMeals(db *sql.DB, table string) ([]Meal, error) {
 	var query string
 	if table == "HF_Meal" {
-		query = "SELECT HFMealID, HFMealRating, HFMealName FROM HF_Meal"
+		query = "SELECT HFMealName, HFMealRating FROM HF_Meal"
 	} else if table == "P3_Meal" {
-		query = "SELECT P3MealID, P3MealRating, P3MealName FROM P3_Meal"
+		query = "SELECT P3MealName, P3MealRating FROM P3_Meal"
 	} else {
 		return nil, fmt.Errorf("invalid table name: %s", table)
 	}
@@ -30,96 +39,74 @@ func getMeals(db *sql.DB, table string) (map[string]int, error) {
 	}
 	defer rows.Close()
 
-	meals := make(map[string]int)
+	var meals []Meal
 	for rows.Next() {
-		var id, rating int
-		var name string
-		if err := rows.Scan(&id, &rating, &name); err != nil {
+		var meal Meal
+		if err := rows.Scan(&meal.Name, &meal.Rating); err != nil {
 			return nil, err
 		}
-		meals[name] = rating
+		meals = append(meals, meal)
 	}
 	return meals, nil
 }
 
 // Function which randomly selects meals based on the weight of the entered meals
-func weightedSelection(meals map[string]int, numMeals int) []string {
+func weightedSelection(meals []Meal, numMeals int) []Meal {
 	rand.Seed(time.Now().UnixNano())
 	selected := make(map[string]bool)
-	result := make([]string, 0, numMeals)
+	var result []Meal
 
-	mealList := []string{}
-	for name, weight := range meals {
-		for i := 0; i < weight; i++ {
-			mealList = append(mealList, name)
+	mealList := []Meal{}
+	for _, meal := range meals {
+		for i := 0; i < meal.Rating; i++ {
+			mealList = append(mealList, meal)
 		}
 	}
 
 	for len(result) < numMeals && len(mealList) > 0 {
 		meal := mealList[rand.Intn(len(mealList))]
-		if !selected[meal] {
+		if !selected[meal.Name] {
 			result = append(result, meal)
-			selected[meal] = true
+			selected[meal.Name] = true
 		}
 	}
 
 	return result
 }
 
-func main() {
-	// Open database
+// API handler for Meal Selection
+func mealServer(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("sqlite", dbPath)
 	if err != nil {
-		log.Fatal("Failed to connect to DB:", err)
+		http.Error(w, "Failed to connect to database", http.StatusInternalServerError)
+		return
 	}
 	defer db.Close()
-	fmt.Println("Connected to the DB Successfully")
 
-	// Get user input for desired amounts of recipes
-	var hfAmount, p3Amount int
-	fmt.Print("Please enter number of Hello Fresh Recipes: ")
-	fmt.Scan(&hfAmount)
-	fmt.Print("Please enter number of Paprika3 Recipes: ")
-	fmt.Scan(&p3Amount)
+	mealType := r.URL.Query().Get("type")
+	mealCount := r.URL.Query().Get("count")
 
-	// Fetch meals from database in the correct areas
-	hfMeals, err := getMeals(db, "HF_Meal")
-	if err != nil {
-		log.Fatal("Error fetching Hello Fresh meals:", err)
-	}
-	p3Meals, err := getMeals(db, "P3_Meal")
-	if err != nil {
-		log.Fatal("Error fetching Paprika3 meals:", err)
+	count, err := strconv.Atoi(mealCount)
+	if err != nil || count < 1 {
+		http.Error(w, "Invalid meal count", http.StatusBadRequest)
+		return
 	}
 
-	// Perform weighted selections
-	var selectedHF, selectedP3 []string
-	if hfAmount > 0 {
-		selectedHF = weightedSelection(hfMeals, hfAmount)
-	}
-	if p3Amount > 0 {
-		selectedP3 = weightedSelection(p3Meals, p3Amount)
+	meals, err := getMeals(db, mealType)
+	if err != nil || len(meals) == 0 {
+		http.Error(w, "No meals found", http.StatusNotFound)
+		return
 	}
 
-	// Print results for each area of meal options
-	fmt.Println("\nYour selected meals for the week are the following:")
-	if len(selectedHF) > 0 {
-		fmt.Println("Hello Fresh Meals:")
-		for _, meal := range selectedHF {
-			fmt.Println("-", meal)
-		}
-	} else {
-		//Error message for if no meals are selected
-		fmt.Println("No Hello Fresh meals selected.")
-	}
+	selectedMeals := weightedSelection(meals, count)
 
-	if len(selectedP3) > 0 {
-		fmt.Println("\nPaprika3 Meals:")
-		for _, meal := range selectedP3 {
-			fmt.Println("-", meal)
-		}
-	} else {
-		//Error message for if no meals are selected
-		fmt.Println("No Paprika3 meals selected.")
-	}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(selectedMeals)
+}
+
+func main() {
+	http.HandleFunc("/meals", mealServer)
+	fmt.Println("Server running on port 8080")
+	log.Fatal(http.ListenAndServe(":8080", nil))
+
 }
