@@ -8,6 +8,7 @@ import (
 	"math/rand"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	_ "modernc.org/sqlite"
@@ -74,6 +75,26 @@ func weightedSelection(meals []Meal, numMeals int) []Meal {
 	return result
 }
 
+// Type Counts function
+func parseTypeCounts(s string) (map[string]int, error) {
+	result := make(map[string]int)
+	pairs := strings.Split(s, ",")
+	for _, pair := range pairs {
+		parts := strings.Split(strings.TrimSpace(pair), ":")
+		if len(parts) != 2 {
+			return nil, fmt.Errorf("Invalid type format: %s", pair)
+		}
+		table := strings.TrimSpace(parts[0])
+		countStr := strings.TrimSpace(parts[1])
+		count, err := strconv.Atoi(countStr)
+		if err != nil || count < 1 {
+			return nil, fmt.Errorf("Invalid count for table %s: %s", table, countStr)
+		}
+		result[table] = count
+	}
+	return result, nil
+}
+
 // API handler for Meal Selection
 func mealServer(w http.ResponseWriter, r *http.Request) {
 	db, err := sql.Open("sqlite", dbPath)
@@ -82,28 +103,40 @@ func mealServer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	defer db.Close()
-
-	mealType := r.URL.Query().Get("type")
-	mealCount := r.URL.Query().Get("count")
-
-	count, err := strconv.Atoi(mealCount)
-	if err != nil || count < 1 {
-		http.Error(w, "Invalid meal count", http.StatusBadRequest)
+	rawTypes := r.URL.Query().Get("type")
+	if rawTypes == "" {
+		http.Error(w, "Missing 'type' parameter", http.StatusBadRequest)
 		return
 	}
 
-	meals, err := getMeals(db, mealType)
-	if err != nil || len(meals) == 0 {
+	typeCountMap, err := parseTypeCounts(rawTypes)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	var finalSelected []Meal
+	for table, count := range typeCountMap {
+		meals, err := getMeals(db, table)
+		if err != nil {
+			http.Error(w, fmt.Sprintf("Failed to get meals from table: %s", table), http.StatusInternalServerError)
+			return
+		}
+		if len(meals) == 0 {
+			continue
+		}
+		selected := weightedSelection(meals, count)
+		finalSelected = append(finalSelected, selected...)
+	}
+
+	if len(finalSelected) == 0 {
 		http.Error(w, "No meals found", http.StatusNotFound)
 		return
 	}
 
-	selectedMeals := weightedSelection(meals, count)
-
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(selectedMeals)
+	json.NewEncoder(w).Encode(finalSelected)
 }
-
 func main() {
 	http.HandleFunc("/meals", mealServer)
 	fmt.Println("Server running on port 8080")
