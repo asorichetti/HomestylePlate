@@ -40,7 +40,7 @@ def weighted_selection_P3(ui):
     return selected_p3
 
 
-conn = db.connect('../Meals.db')
+conn = db.connect('./Backend/Meals.db') 
 crsr = conn.cursor()
 print ("Connected to the DB")
 
