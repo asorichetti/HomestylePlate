@@ -14,7 +14,7 @@ import (
 )
 
 // Database path
-const dbPath = "../Meals.db"
+const dbPath = "./Backend/Meals.db"
 
 // JSON response structure
 type Meal struct {

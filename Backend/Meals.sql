@@ -1,4 +1,5 @@
-
+DROP TABLE IF EXISTS [HF_Meal];
+DROP TABLE IF EXISTS [P3_Meal];
 -- Create table for Hello Fresh Meals
 CREATE TABLE HF_Meal(
     HFMealID INTEGER PRIMARY KEY,
