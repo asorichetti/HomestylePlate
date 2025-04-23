@@ -4,65 +4,54 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Meal Slot Machine</title>
-  <link rel="stylesheet" href="style.css"/>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="slot-wrapper">
-    <!-- Slot Machine Frame -->
-    <div class="machine-container">
+  <nav class="navbar">Meal Slot Machine</nav>
+  <div class="background">
+    <div class="slot-wrapper">
       <div class="machine-frame">
-        <header>
-          <h1>What's for Dinner?</h1>
-        </header>
-
-        <main class="slot-machine" role="region" aria-label="Meal slot machine interface">
-          <!-- Protein Wheel -->
-          <section class="wheel" aria-labelledby="protein-label">
-            <h2 class="category" id="protein-label">Protein</h2>
-            <div class="reel" id="protein-reel" aria-live="polite">
-              <div class="strip" id="protein-strip"></div>
-            </div>
-            <button id="lock-protein" onclick="toggleLock('protein')" aria-pressed="false" aria-label="Lock Protein">
-              <i class="fas fa-lock" aria-hidden="true"></i> Lock
+        <h1>What's for Dinner?</h1>
+        <div class="slot-machine">
+          <div class="wheel">
+            <div class="category">Protein</div>
+            <div class="reel" id="protein-reel"><div class="strip" id="protein-strip">---</div></div>
+            <button id="lock-protein" onclick="toggleLock('protein')" aria-pressed="false">
+              <i class="fas fa-lock-open" aria-hidden="true"></i> Lock
             </button>
-          </section>
-
-          <!-- Vegetable Wheel -->
-          <section class="wheel" aria-labelledby="vegetable-label">
-            <h2 class="category" id="vegetable-label">Veggies</h2>
-            <div class="reel" id="vegetable-reel" aria-live="polite">
-              <div class="strip" id="vegetable-strip"></div>
-            </div>
-            <button id="lock-vegetable" onclick="toggleLock('vegetable')" aria-pressed="false" aria-label="Lock Veggies">
-              <i class="fas fa-lock" aria-hidden="true"></i> Lock
+          </div>
+          <div class="wheel">
+            <div class="category">Vegetable</div>
+            <div class="reel" id="vegetable-reel"><div class="strip" id="vegetable-strip">---</div></div>
+            <button id="lock-vegetable" onclick="toggleLock('vegetable')" aria-pressed="false">
+              <i class="fas fa-lock-open" aria-hidden="true"></i> Lock
             </button>
-          </section>
-
-          <!-- Starch Wheel -->
-          <section class="wheel" aria-labelledby="starch-label">
-            <h2 class="category" id="starch-label">Carbs</h2>
-            <div class="reel" id="starch-reel" aria-live="polite">
-              <div class="strip" id="starch-strip"></div>
-            </div>
-            <button id="lock-starch" onclick="toggleLock('starch')" aria-pressed="false" aria-label="Lock Carbs">
-              <i class="fas fa-lock" aria-hidden="true"></i> Lock
+          </div>
+          <div class="wheel">
+            <div class="category">Starch</div>
+            <div class="reel" id="starch-reel"><div class="strip" id="starch-strip">---</div></div>
+            <button id="lock-starch" onclick="toggleLock('starch')" aria-pressed="false">
+              <i class="fas fa-lock-open" aria-hidden="true"></i> Lock
             </button>
-          </section>
-        </main>
-
+          </div>
+        </div>
         <div class="spin-button-container">
-          <button id="spin-button" onclick="handleSpin()" aria-label="Spin the slot machine">Spin</button>
+          <button onclick="handleSpin()">
+            <i class="fas fa-random"></i> Spin
+          </button>
         </div>
       </div>
-
-      <!-- Pull Lever -->
-      <div class="lever-container" role="button" aria-label="Pull lever to spin" tabindex="0" onclick="pullLever()" onkeypress="if(event.key==='Enter') pullLever()">
-        <div class="lever" id="lever"></div>
+      <div class="lever-container" onclick="handleSpin()" role="button" aria-label="Pull lever to spin" tabindex="0">
+        <div class="lever-arm" id="lever">
+          <div class="lever-horizontal"></div>
+          <div class="lever-vertical">
+            <div class="lever-ball"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>

@@ -1,60 +1,41 @@
 const items = {
-    protein: ['Chicken', 'Turkey', 'Sausage', 'Steak', 'Roast Beef', 'Pork Chops', 'Schnitzel', 'Salmon'],
-    vegetable: ['Broccoli', 'Carrots', 'Asparagus', 'Peas', 'Corn', 'Cauliflower', 'Salad', 'Green Beans'],
-    starch: ['Rice', 'Gnocchi', 'Mashed Potatoes', 'Fries', 'Sweet Potato Mash', 'Stuffing', 'Orzo', 'Garlic Bread']
-  };
-  
-  let lockedItems = {
-    protein: false,
-    vegetable: false,
-    starch: false
-  };
-  
-  function toggleLock(type) {
-    lockedItems[type] = !lockedItems[type];
-    const lockButton = document.getElementById(`lock-${type}`);
-    lockButton.setAttribute('aria-pressed', lockedItems[type]);
-    lockButton.innerHTML = lockedItems[type]
-      ? `<i class="fas fa-lock" aria-hidden="true"></i> Locked`
-      : `<i class="fas fa-lock-open" aria-hidden="true"></i> Lock`;
-  }
-  
-  function handleSpin() {
-    pullLever();
-  }
-  
-  function pullLever() {
-    ['protein', 'vegetable', 'starch'].forEach(type => {
-      if (!lockedItems[type]) spinWheel(type);
-    });
-  
-    // Animate lever
-    const lever = document.getElementById('lever');
-    lever.style.transform = 'translateY(5px)';
-    setTimeout(() => (lever.style.transform = 'translateY(0)'), 300);
-  }
-  
-  function spinWheel(type) {
-    const reel = document.getElementById(`${type}-reel`);
-    const strip = document.getElementById(`${type}-strip`);
-  
-    strip.innerHTML = '';
-    const spinItems = [...items[type], ...items[type]]; // Loop
-    spinItems.forEach(text => {
-      const item = document.createElement('div');
-      item.textContent = text;
-      item.style.padding = '5px';
-      strip.appendChild(item);
-    });
-  
-    strip.style.transition = 'none';
-    strip.style.transform = 'translateY(0)';
-    void strip.offsetWidth; // Force reflow
-  
-    const totalHeight = strip.scrollHeight;
-    const spinDistance = -Math.floor(Math.random() * (strip.children.length - 3)) * 30;
-  
-    strip.style.transition = 'transform 2s cubic-bezier(0.33, 1, 0.68, 1)';
-    strip.style.transform = `translateY(${spinDistance}px)`;
-  }
-  
+  protein: ['Chicken', 'Turkey', 'Sausage', 'Steak', 'Roast Beef', 'Pork Chops', 'Schnitzel', 'Pork Tenderloin', 'Salmon', 'Breaded Fish', 'Brisket', 'Ham', 'Flank Steak', 'Meatloaf', 'Mini-Meatloafs', 'Burgers'],
+  vegetable: ['Broccoli', 'Carrots', 'Asparagus', 'Peas', 'Corn', 'Mixed Vegetables', 'California Vegetables', 'Broccolini', 'Brussel Sprouts', 'Cauliflower', 'Coleslaw', 'Spinnach Salad', 'Caesar Salad', 'Green Beans', 'Carrots and Beans Medley'],
+  starch: ['Rice', 'Brown Rice', 'Gnocchi', 'Mashed Potatoes', 'Baked Potato', 'Roasted Potatoes', 'Sweet Potato Mash', 'Baked Sweet Potato', 'Orzo', 'Stuffing', 'Baked Beans', 'Garlic Bread', 'Fries', 'Sweet Potato Fries', 'Onion Rings', 'Spring Rolls', 'Potstickers']
+};
+
+let lockedItems = { protein: false, vegetable: false, starch: false };
+
+function pullLever() {
+  const lever = document.getElementById('lever');
+  lever.classList.add('lever-pulled');
+
+  setTimeout(() => {
+    lever.classList.remove('lever-pulled');
+  }, 500);
+}
+
+function spinWheel(type) {
+  if (lockedItems[type]) return;
+
+  const strip = document.getElementById(`${type}-strip`);
+  const itemsArray = items[type];
+  const randomIndex = Math.floor(Math.random() * itemsArray.length);
+  strip.textContent = itemsArray[randomIndex];
+}
+
+function toggleLock(type) {
+  lockedItems[type] = !lockedItems[type];
+  const button = document.getElementById(`lock-${type}`);
+  const icon = lockedItems[type] ? 'fa-lock' : 'fa-lock-open';
+  const label = lockedItems[type] ? 'Locked' : 'Lock';
+  button.setAttribute('aria-pressed', lockedItems[type]);
+  button.innerHTML = `<i class="fas ${icon}" aria-hidden="true"></i> ${label}`;
+}
+
+function handleSpin() {
+  pullLever();
+  spinWheel('protein');
+  spinWheel('vegetable');
+  spinWheel('starch');
+}
