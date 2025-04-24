@@ -28,7 +28,7 @@ function toggleLock(type) {
   lockedItems[type] = !lockedItems[type];
   const button = document.getElementById(`lock-${type}`);
   const icon = lockedItems[type] ? 'fa-lock' : 'fa-lock-open';
-  const label = lockedItems[type] ? 'Locked' : 'Lock';
+  const label = lockedItems[type] ? 'Unlock' : 'Lock';
   button.setAttribute('aria-pressed', lockedItems[type]);
   button.innerHTML = `<i class="fas ${icon}" aria-hidden="true"></i> ${label}`;
 }
