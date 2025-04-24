@@ -1,6 +1,6 @@
 const items = {
   protein: ['Chicken', 'Turkey', 'Sausage', 'Steak', 'Roast Beef', 'Pork Chops', 'Schnitzel', 'Pork Tenderloin', 'Salmon', 'Breaded Fish', 'Brisket', 'Ham', 'Flank Steak', 'Meatloaf', 'Mini-Meatloafs', 'Burgers'],
-  vegetable: ['Broccoli', 'Carrots', 'Asparagus', 'Peas', 'Corn', 'Mixed Vegetables', 'California Vegetables', 'Broccolini', 'Brussel Sprouts', 'Cauliflower', 'Coleslaw', 'Spinnach Salad', 'Caesar Salad', 'Green Beans', 'Carrots and Beans Medley'],
+  vegetable: ['Broccoli', 'Carrots', 'Asparagus', 'Peas', 'Corn', 'Mixed Vegetables', 'California Vegetables', 'Broccolini', 'Brussel Sprouts', 'Cauliflower', 'Coleslaw', 'Spinnach Salad', 'Caesar Salad', 'Green Beans', 'Carrots and Beans Medley', 'Zucchini'],
   starch: ['Rice', 'Brown Rice', 'Gnocchi', 'Mashed Potatoes', 'Baked Potato', 'Roasted Potatoes', 'Sweet Potato Mash', 'Baked Sweet Potato', 'Orzo', 'Stuffing', 'Baked Beans', 'Garlic Bread', 'Fries', 'Sweet Potato Fries', 'Onion Rings', 'Spring Rolls', 'Potstickers']
 };
 
