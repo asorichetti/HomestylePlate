@@ -129,8 +129,8 @@ button i {
 .lever-container {
   cursor: pointer;
   position: relative;
-  height: 150px;
-  width: 60px;
+  height: 0px;
+  width: 90px;
 }
 
 .lever-arm {
@@ -147,30 +147,30 @@ button i {
 }
 
 .lever-horizontal {
-  width: 40px;
-  height: 6px;
+  width: 30px;
+  height: 10px;
   background: #333;
   border-radius: 3px;
 }
 
 .lever-vertical {
-  width: 6px;
-  height: 60px;
+  width: 10px;
+  height: 90px;
   background: #333;
   position: absolute;
-  left: 34px;
+  left: 20px;
   top: 0px;
   border-radius: 3px;
 }
 
 .lever-ball {
-  width: 16px;
-  height: 16px;
+  width: 22px;
+  height: 22px;
   background: red;
   border-radius: 50%;
   position: absolute;
   bottom: -8px;
-  left: -5px;
+  left: -6px;
 }
 
 .strip {
