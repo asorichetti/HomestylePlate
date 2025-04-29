@@ -1,22 +1,56 @@
-body {
+*{
   margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f2efe4;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #fef9e7;
+  background-image: radial-gradient(#e4d6a7 1px, transparent 1px);
+  background-size: 25px 25px;
+  background-attachment: fixed;
+  color: #4a3b28;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 100vh;
 }
 
 .navbar {
-  background-color: #f2c94c;
-  padding: 1rem;
-  width: 100%;
-  text-align: center;
-  font-size: 1.5rem;
+  background-color: #f5c16c;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+}
+
+.logo a{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.logo-img{
+  height: 5rem;
+}
+
+.nav-links{
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+.nav-links a{
+  text-decoration: none;
+  color: #4a3b28;
   font-weight: bold;
 }
 
+.nav-links a:hover {
+  text-decoration: underline;
+}
 .background {
   flex: 1;
   display: flex;
@@ -28,7 +62,6 @@ body {
 .slot-wrapper {
   display: flex;
   align-items: center;
-  /*gap: 2rem;*/
 }
 
 .machine-frame {
@@ -41,6 +74,7 @@ body {
 
 h1 {
   margin-bottom: 1rem;
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 
 .slot-machine {
@@ -141,4 +175,12 @@ button i {
 
 .strip {
   animation: none;
+}
+
+.footer{
+  background-color: #f5c16c;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  color: #4a3b28;
 }

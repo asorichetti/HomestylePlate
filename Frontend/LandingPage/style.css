@@ -1,0 +1,97 @@
+/*Reset page*/
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/*Background*/
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fef9e7;
+    background-image: radial-gradient(#e4d6a7 1px, transparent 1px);
+    background-size: 25px 25px;
+    background-attachment: fixed;
+    color: #4a3b28;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: #f5c16c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-img{
+    height: 5rem;
+}
+
+.nav-links{
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a{
+    text-decoration: none;
+    color: #4a3b28;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.landing{
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+}
+
+.intro h2{
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.intro p{
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button{
+    background-color: #f5c16c;
+    color: #4a3b28;
+    margin: 4rem;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 10px;
+    transition: background-color 0.3s;
+}
+
+.cta-button:hover{
+    background-color: #e0a84b;
+}
+
+.footer{
+    background-color: #f5c16c;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #4a3b28;
+}
