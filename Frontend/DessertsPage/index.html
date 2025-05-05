@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homestyle Plate - Desserts Showcase</title>
+    <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../LandingPage/index.html">
+                 <img src="../images/HomestylePlateLogo.png" alt="Homestyle Kitchen Logo" class="logo-img">
+                 <h1>Homestyle Plate</h1>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../LandingPage/index.html">Home</a></li>
+                <li><a href="../MealSlotMachine/index.html">Meal Slot Machine</a></li>
+                <li><a href="index.html">Desserts Showcase</a></li>
+                <!--To be expanded in future iterations to feature more pages as they are created-->
+            </ul>
+        </nav>
+    </header>
+    <main class="content">
+        <h1 class="page-title">Desserts Showcase</h1>
+        <div id="dessertGallery" class="gallery"></div>
+
+        <div class="page-controls" id="page-controls">
+            <button id="prev-page">Previous</button>
+            <span id="page-number">Page 1</span>
+            <button id="next-page">Next</button>
+        </div>
+    </main>
+
+    <div class="modal hidden" id="dessertModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <img id="modalImage" alt="Dessert Image"/>
+            <p><strong>Ingredients:</strong></p>
+            <p id="modalIngredients"></p>
+            <p><strong>Bake Time:</strong> <span id="modalBakeTime"></span></p>
+            <p><a href="#" id="modalRecipeLink" target="_blank">View Full Recipe</a></p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Homestyle Plate; Developed by Alex Sorichetti</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
