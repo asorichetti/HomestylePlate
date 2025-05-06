@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox
 
 # Connect to Dessert Database #
 DB_FILE = 'Backend/GoCode/dessert-backend/dessert.db'
+
 def get_connection():
     return sqlite3.connect(DB_FILE)
 
@@ -24,18 +25,17 @@ class ToolTip:
 
         text_widget = tk.Text(
             self.tooltip,
-            height=5,  # Adjust height as needed
-            width=40,  # Adjust width as needed
-            wrap="word",  # Word wrapping
+            height=5,
+            width=40,
+            wrap="word",
             background="lightyellow",
             relief="solid",
             borderwidth=1,
-            padx=5,  # Padding inside the Text widget
-            pady=5   # Padding inside the Text widget
-            )
-
-        text_widget.insert("1.0", text)  # Insert the ingredients text
-        text_widget.config(state=tk.DISABLED)  # Make it read-only so it doesn't allow editing
+            padx=5,
+            pady=5
+        )
+        text_widget.insert("1.0", self.text)
+        text_widget.config(state=tk.DISABLED)
         text_widget.pack()
 
     def hide_tooltip(self, event):
@@ -47,11 +47,11 @@ class DessertAdminApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Dessert Admin Panel")
+        self.tooltip = None  # Initialize tooltip as None
         self.setup_widgets()
         self.load_data()
 
     def setup_widgets(self):
-        # Form to Add/Edit Desserts #
         self.form_frame = tk.Frame(self.root)
         self.form_frame.pack(pady=10)
 
@@ -75,7 +75,6 @@ class DessertAdminApp:
         self.recipe_link_entry = tk.Entry(self.form_frame)
         self.recipe_link_entry.grid(row=4, column=1, padx=5)
 
-        # Buttons #
         self.add_button = tk.Button(self.root, text="Add Dessert", command=self.add_record)
         self.add_button.pack(pady=5)
 
@@ -85,7 +84,6 @@ class DessertAdminApp:
         self.delete_button = tk.Button(self.root, text="Delete Dessert", command=self.delete_record)
         self.delete_button.pack(pady=5)
 
-        # Table Display - Treeview #
         self.tree = ttk.Treeview(
             self.root,
             columns=("ID", "Name", "Image", "Ingredients", "BakeTime", "RecipeLink"),
@@ -104,17 +102,13 @@ class DessertAdminApp:
         self.tree.heading("RecipeLink", text="Recipe Link")
         self.tree.column("RecipeLink", width=200)
         self.tree.pack(pady=10)
-        self.tree.bind("<ButtonRelease-1>", self.on_record_select)
 
-        # Tooltip behavior setup #
-        self.setup_tooltip()
-
-    def setup_tooltip(self):
-        self.tooltip = None
         self.tree.bind("<Motion>", self.show_tooltip)
         self.tree.bind("<Leave>", self.hide_tooltip)
+        self.tree.bind("<ButtonRelease-1>", self.on_tree_click)
 
     def show_tooltip(self, event):
+        # Identify the region and check if it's a valid cell in the 'Name' column
         region = self.tree.identify("region", event.x, event.y)
         if region != "cell":
             self.hide_tooltip(event)
@@ -123,79 +117,92 @@ class DessertAdminApp:
         row_id = self.tree.identify_row(event.y)
         col = self.tree.identify_column(event.x)
 
-        if not row_id or col not in ('#2', '#4'):
+        # Only show tooltip for the 'Name' column (col == '#2')
+        if not row_id or col != '#2':
             self.hide_tooltip(event)
             return
 
         item = self.tree.item(row_id)
-        if col == '#2':
-            text = item["values"][1]  # Index 1 = Name
-        else:
-            text = item["values"][3]
+        text = item["values"][1]  # The "Name" column (index 1)
 
+        # Destroy existing tooltip if it exists
         if self.tooltip and self.tooltip.winfo_exists():
             self.tooltip.destroy()
 
+        # Create the tooltip
         self.tooltip = tk.Toplevel(self.root)
         self.tooltip.wm_overrideredirect(True)
-        self.tooltip.wm_geometry(f"+{event.x_root + 10}+{event.y_root + 10}")
-
         text_widget = tk.Text(
             self.tooltip,
-            height=10,  # Adjust height as needed
-            width=40,  # Adjust width as needed
-            wrap="word",  # Word wrapping
+            wrap="word",
+            width=40,
+            height=2,
             background="lightyellow",
             relief="solid",
             borderwidth=1,
-            padx=5,  # Padding inside the Text widget
-            pady=5   # Padding inside the Text widget
+            padx=5,
+            pady=5
         )
-
-        text_widget.insert("1.0", text)  # Insert the ingredients text
-        text_widget.config(state=tk.DISABLED)  # Make it read-only so it doesn't allow editing
+        text_widget.insert(tk.END, text)
+        text_widget.config(state=tk.DISABLED)
         text_widget.pack()
 
+        # Position the tooltip near the mouse pointer
+        self.tooltip.wm_geometry(f"+{event.x_root + 10}+{event.y_root + 10}")
+
     def hide_tooltip(self, event):
+        # Ensure that the tooltip exists before trying to destroy it
         if self.tooltip and self.tooltip.winfo_exists():
             self.tooltip.destroy()
             self.tooltip = None
 
+    def on_tree_click(self, event):
+        region = self.tree.identify("region", event.x, event.y)
+        if region != "cell":
+            return
+
+        row_id = self.tree.identify_row(event.y)
+        col = self.tree.identify_column(event.x)
+
+        if col == '#4':  # Ingredients column
+            item = self.tree.item(row_id)
+            ingredients = item["values"][3]
+
+            # Show a new popup window with full ingredients
+            popup = tk.Toplevel(self.root)
+            popup.title("Ingredients")
+
+            text = tk.Text(popup, wrap="word", width=60, height=15)
+            text.insert("1.0", ingredients)
+            text.config(state=tk.DISABLED)
+            text.pack(padx=10, pady=10)
+
+            tk.Button(popup, text="Close", command=popup.destroy).pack(pady=5)
+
     def load_data(self):
         conn = get_connection()
         cursor = conn.cursor()
-
-        # Clear Current Treeview #
         for row in self.tree.get_children():
             self.tree.delete(row)
-
-        # Query All Desserts #
         cursor.execute("SELECT * FROM Desserts")
         rows = cursor.fetchall()
-
         for row in rows:
             self.tree.insert("", "end", values=row)
-
         conn.close()
 
     def on_record_select(self, event):
         selected_item = self.tree.selection()
         if not selected_item:
             return
-
         record = self.tree.item(selected_item)["values"]
         self.name_entry.delete(0, tk.END)
         self.name_entry.insert(0, record[1])
-
         self.image_entry.delete(0, tk.END)
         self.image_entry.insert(0, record[2])
-
         self.ingredients_entry.delete(0, tk.END)
         self.ingredients_entry.insert(0, record[3])
-
         self.bake_time_entry.delete(0, tk.END)
         self.bake_time_entry.insert(0, record[4])
-
         self.recipe_link_entry.delete(0, tk.END)
         self.recipe_link_entry.insert(0, record[5])
 
@@ -226,18 +233,15 @@ class DessertAdminApp:
         if not selected_item:
             messagebox.showerror("Selection Error", "Please Select a Dessert to Edit")
             return
-
         record_id = self.tree.item(selected_item)["values"][0]
         name = self.name_entry.get()
         image = self.image_entry.get()
         ingredients = self.ingredients_entry.get()
         bake_time = self.bake_time_entry.get()
         recipe = self.recipe_link_entry.get()
-
         if not name or not image or not ingredients or not bake_time or not recipe:
             messagebox.showerror("Input Error", "All Fields are Required")
             return
-
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(
@@ -254,7 +258,6 @@ class DessertAdminApp:
         if not selected_item:
             messagebox.showerror("Selection Error", "Please Select a Dessert to Delete")
             return
-
         record_id = self.tree.item(selected_item)["values"][0]
         conn = get_connection()
         cursor = conn.cursor()
