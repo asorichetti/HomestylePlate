@@ -19,17 +19,19 @@ const dbPath = "./Backend/Meals.db"
 
 // JSON response structure
 type Meal struct {
-	Name   string `json:"name"`
-	Rating int    `json:"rating"`
+	Name       string `json:"name"`
+	Rating     int    `json:"rating"`
+	ImageURL   string `json:"image_url"`
+	RecipeLink string `json:"recipe_link"`
 }
 
 // getMeals retrieves meals and ratings from a table (handles both HF_Meal and P3_Meal)
 func getMeals(db *sql.DB, table string) ([]Meal, error) {
 	var query string
 	if table == "HF_Meal" {
-		query = "SELECT HFMealName, HFMealRating FROM HF_Meal"
+		query = "SELECT HFMealName, HFMealRating, ImageLink, RecipeLink FROM HF_Meal"
 	} else if table == "P3_Meal" {
-		query = "SELECT P3MealName, P3MealRating FROM P3_Meal"
+		query = "SELECT P3MealName, P3MealRating, ImageLink, RecipeLink FROM P3_Meal"
 	} else {
 		return nil, fmt.Errorf("invalid table name: %s", table)
 	}
@@ -43,7 +45,7 @@ func getMeals(db *sql.DB, table string) ([]Meal, error) {
 	var meals []Meal
 	for rows.Next() {
 		var meal Meal
-		if err := rows.Scan(&meal.Name, &meal.Rating); err != nil {
+		if err := rows.Scan(&meal.Name, &meal.Rating, &meal.ImageURL, &meal.RecipeLink); err != nil {
 			return nil, err
 		}
 		meals = append(meals, meal)
