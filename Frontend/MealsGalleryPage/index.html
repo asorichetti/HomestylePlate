@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homestyle Plate - Meal Gallery</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./style.css" />
 </head>
 <body>
     <header>
         <nav class="navbar">
             <div class="logo">
                 <a href="../LandingPage/index.html">
-                 <img src="../images/HomestylePlateLogo.png" alt="Homestyle Kitchen Logo" class="logo-img">
-                 <h1>Homestyle Plate</h1>
+                    <img src="../images/HomestylePlateLogo.png" alt="Homestyle Kitchen Logo" class="logo-img">
+                    <h1>Homestyle Plate</h1>
                 </a>
             </div>
             <ul class="nav-links">
@@ -25,10 +25,18 @@
     </header>
 
     <main class="main" role="main">
-        <section class="gallery" id="meal-gallery" aria-labelledby="gallery-heading">
-            <h2 id="gallery-heading" class="visually-hidden">Random Meal Suggestions</h2>
-            <!--Gallery meals will be inserted here by JS file-->
-        </section>
+        <div class="gallery-container">
+            <!-- Left arrow button to navigate to the previous meal -->
+            <button id="left-arrow" class="arrow-button left">&#8592;</button>
+
+            <!-- Meal gallery container where the meal images and links will be dynamically inserted -->
+            <div id="meal-gallery" class="meal-gallery"></div>
+
+            <!-- Right arrow button to navigate to the next meal -->
+            <button id="right-arrow" class="arrow-button right">&#8594;</button>
+        </div>
+         
+          
 
         <section class="form-section" aria-labelledby="meal-form-heading">
             <h2 id="meal-form-heading">Select Meals</h2>
@@ -51,6 +59,6 @@
     <footer class="footer">
         <p>Homestyle Plate; Developed by Alex Sorichetti</p>
     </footer>
-    <script src="script.js"></script>
+    <script src="./script.js" defer></script>
 </body>
 </html>

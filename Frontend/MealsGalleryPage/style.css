@@ -1,4 +1,4 @@
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -24,7 +24,7 @@ body {
     padding: 1rem 2rem;
 }
 
-.logo a{
+.logo a {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -32,17 +32,17 @@ body {
     color: inherit;
 }
 
-.logo-img{
+.logo-img {
     height: 5rem;
 }
 
-.nav-links{
+.nav-links {
     list-style: none;
     display: flex;
     gap: 2rem;
 }
 
-.nav-links a{
+.nav-links a {
     text-decoration: none;
     color: #4a3b28;
     font-weight: bold;
@@ -52,7 +52,7 @@ body {
     text-decoration: underline;
 }
 
-.main{
+.main {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -60,42 +60,84 @@ body {
     padding: 2rem;
 }
 
-.gallery{
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 1.5rem;
+.gallery-container {
+    position: relative;
     width: 100%;
-    max-width: 1200px;
-    margin-bottom: 2rem;
+    max-width: 900px; /* Adjust as needed */
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.gallery .meal-card{
-    border: 2px solid #4a3b28;
-    background: white;
-    border-radius: 8px;
+.arrow-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f5c16c;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #4a3b28;
+}
+
+.arrow-button:hover {
+    background-color: #e3b55e;
+}
+
+.left {
+    left: 10px; /* Move the left arrow slightly inside */
+    z-index: 1; /* Ensure it's above the image */
+}
+
+.right {
+    right: 10px; /* Same for right arrow */
+    z-index: 1;
+}
+
+.meal-gallery {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     overflow: hidden;
+}
+
+.meal-card {
     display: flex;
     flex-direction: column;
-}
-
-.gallery .meal-card img{
-    object-fit: cover;
-    aspect-ratio: 4 / 3;
+    align-items: center;
+    position: relative;
     width: 100%;
-    height: auto;
+    max-width: 100%;
 }
 
-.gallery .meal-card h3{
-    margin: 0.5rem;
+.meal-card img {
+    object-fit: cover;
+    width: 100%;
+    height: 300px; /* Adjust the height as needed */
+    border-radius: 8px;
 }
 
-.gallery .meal-card a {
-    margin: 0.5rem;
+.meal-card a {
+    position: absolute;
+    bottom: 10px;
+    left: 10px; /* Align the text box to the bottom left */
+    background-color: #f5c16c;
     color: #4a3b28;
-    text-decoration: underline;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px; /* Rounded only on top-right and bottom-left corners */
 }
 
-.form-section{
+.meal-card a:hover {
+    background-color: #e3b55e;
+}
+
+.form-section {
     background-color: #fff3d0;
     border: 1px solid #4a3b28;
     border-radius: 10px;
@@ -103,26 +145,27 @@ body {
     max-width: 500px;
     width: 100%;
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
 }
 
-.form-group{
+.form-group {
     margin-bottom: 1.5rem;
 }
 
-label{
+label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: bold;
 }
 
-input[type="number"]{
+input[type="number"] {
     width: 100%;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-button{
+button {
     padding: 0.75rem 1.5rem;
     background-color: #f5c16c;
     border: none;
@@ -131,11 +174,11 @@ button{
     border-radius: 8px;
 }
 
-button:hover{
+button:hover {
     background-color: #e3b55e;
 }
 
-.footer{
+.footer {
     background-color: #f5c16c;
     text-align: center;
     padding: 1rem;
@@ -144,7 +187,7 @@ button:hover{
     margin-top: auto;
 }
 
-.visually-hidden{
+.visually-hidden {
     position: absolute;
     left: -10000px;
     top: auto;
