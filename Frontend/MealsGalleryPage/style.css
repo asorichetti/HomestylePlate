@@ -1,0 +1,154 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fef9e7;
+    background-image: radial-gradient(#e4d6a7 1px, transparent 1px);
+    background-size: 25px 25px;
+    background-attachment: fixed;
+    color: #4a3b28;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: #f5c16c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo a{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-img{
+    height: 5rem;
+}
+
+.nav-links{
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a{
+    text-decoration: none;
+    color: #4a3b28;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.main{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.gallery{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 2rem;
+}
+
+.gallery .meal-card{
+    border: 2px solid #4a3b28;
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.gallery .meal-card img{
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    height: auto;
+}
+
+.gallery .meal-card h3{
+    margin: 0.5rem;
+}
+
+.gallery .meal-card a {
+    margin: 0.5rem;
+    color: #4a3b28;
+    text-decoration: underline;
+}
+
+.form-section{
+    background-color: #fff3d0;
+    border: 1px solid #4a3b28;
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-group{
+    margin-bottom: 1.5rem;
+}
+
+label{
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input[type="number"]{
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button{
+    padding: 0.75rem 1.5rem;
+    background-color: #f5c16c;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+button:hover{
+    background-color: #e3b55e;
+}
+
+.footer{
+    background-color: #f5c16c;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #4a3b28;
+    margin-top: auto;
+}
+
+.visually-hidden{
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
