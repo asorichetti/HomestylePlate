@@ -1,0 +1,197 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fef9e7;
+    background-image: radial-gradient(#e4d6a7 1px, transparent 1px);
+    background-size: 25px 25px;
+    background-attachment: fixed;
+    color: #4a3b28;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: #f5c16c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-img {
+    height: 5rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #4a3b28;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+.main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+}
+
+.gallery-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px; /* Adjust as needed */
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.arrow-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #f5c16c;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50%;
+    color: #4a3b28;
+}
+
+.arrow-button:hover {
+    background-color: #e3b55e;
+}
+
+.left {
+    left: 10px; /* Move the left arrow slightly inside */
+    z-index: 1; /* Ensure it's above the image */
+}
+
+.right {
+    right: 10px; /* Same for right arrow */
+    z-index: 1;
+}
+
+.meal-gallery {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.meal-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+}
+
+.meal-card img {
+    object-fit: cover;
+    width: 100%;
+    height: 300px; /* Adjust the height as needed */
+    border-radius: 8px;
+}
+
+.meal-card a {
+    position: absolute;
+    bottom: 10px;
+    left: 10px; /* Align the text box to the bottom left */
+    background-color: #f5c16c;
+    color: #4a3b28;
+    text-decoration: none;
+    padding: 0.5rem;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px; /* Rounded only on top-right and bottom-left corners */
+}
+
+.meal-card a:hover {
+    background-color: #e3b55e;
+}
+
+.form-section {
+    background-color: #fff3d0;
+    border: 1px solid #4a3b28;
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 0.75rem 1.5rem;
+    background-color: #f5c16c;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: #e3b55e;
+}
+
+.footer {
+    background-color: #f5c16c;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #4a3b28;
+    margin-top: auto;
+}
+
+.visually-hidden {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}

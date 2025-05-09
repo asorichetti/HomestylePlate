@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homestyle Plate - Meal Gallery</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../LandingPage/index.html">
+                    <img src="../images/HomestylePlateLogo.png" alt="Homestyle Kitchen Logo" class="logo-img">
+                    <h1>Homestyle Plate</h1>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li><a href="../LandingPage/index.html">Home</a></li>
+                <li><a href="../MealSlotMachine/index.html">Meal Slot Machine</a></li>
+                <li><a href="../DessertsPage/index.html">Desserts Showcase</a></li>
+                <li><a href="index.html">Randomized Menu Planner</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main" role="main">
+        <div class="gallery-container">
+            <!-- Left arrow button to navigate to the previous meal -->
+            <button id="left-arrow" class="arrow-button left">&#8592;</button>
+
+            <!-- Meal gallery container where the meal images and links will be dynamically inserted -->
+            <div id="meal-gallery" class="meal-gallery"></div>
+
+            <!-- Right arrow button to navigate to the next meal -->
+            <button id="right-arrow" class="arrow-button right">&#8594;</button>
+        </div>
+         
+          
+
+        <section class="form-section" aria-labelledby="meal-form-heading">
+            <h2 id="meal-form-heading">Select Meals</h2>
+            <form id="meal-form">
+                <div class="form-group">
+                    <label for="hf-count">Number of HelloFresh meals:</label>
+                    <input type="number" id="hf-count" min="0" value="0" aria-describedby="hf-desc"/>
+                    <small id="hf-desc">Choose how many HelloFresh meals you'd like to receive.</small>
+                </div>
+                <div class="form-group">
+                    <label for="p3-count">Number of Paprika3 meals:</label>
+                    <input type="number" id="p3-count" name="p3-count" min="0" value="0" aria-describedby="p3-desc"/>
+                    <small id="p3-desc">Choose how many Paprika3 meals you'd like to receive.</small>
+                </div>
+                <button type="submit" id="get-meals" aria-label="Get selected meals">Get Meals</button>
+            </form>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <p>Homestyle Plate; Developed by Alex Sorichetti</p>
+    </footer>
+    <script src="./script.js" defer></script>
+</body>
+</html>
