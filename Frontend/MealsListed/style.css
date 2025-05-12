@@ -1,9 +1,11 @@
+/* Global Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* General Styling */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #fef9e7;
@@ -16,6 +18,7 @@ body {
     flex-direction: column;
 }
 
+/* Navbar Styling */
 .navbar {
     background-color: #f5c16c;
     display: flex;
@@ -52,8 +55,8 @@ body {
     text-decoration: underline;
 }
 
-/*Main Content*/
-main{
+/* Main Content */
+main {
     flex: 1;
     padding: 2rem;
     display: flex;
@@ -61,16 +64,17 @@ main{
     align-items: center;
 }
 
-/*Meals List*/
-#meals-list{
+/* Meal List */
+#meals-list {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
     width: 100%;
-    max-width: 800px
+    max-width: 800px;
 }
 
-.meal-entry{
+/* Meal Card Entry */
+.meal-entry {
     display: flex;
     align-items: center;
     background-color: white;
@@ -82,32 +86,35 @@ main{
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-/*Square Image Crop*/
-.meal-image{
-    width: 120px;
-    height: 120px;
+/* Image Styling (Square Crop) */
+.meal-image {
+    width: 150px;
+    height: 150px;
     object-fit: cover;
     border-radius: 0.5rem;
     border: 2px solid #f5c16c;
     object-position: center;
 }
 
-/*Meal Name Link*/
-.meal-entry a{
+/* Meal Name Styling */
+.meal-entry a {
     font-weight: bold;
     color: #4a3b28;
     text-decoration: none;
     background-color: #f5c16c;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem 1rem;
     border-radius: 0.5rem;
+    flex: 1;
+    text-align: left;
 }
 
-.meal-entry a:hover{
+/* Hover Effect for Meal Name */
+.meal-entry a:hover {
     text-decoration: underline;
 }
 
-/*Lock Button*/
-.lock-btn{
+/* Lock Button Styling */
+.lock-btn {
     margin-left: auto;
     background-color: #f5c16c;
     border: none;
@@ -118,7 +125,7 @@ main{
     color: #4a3b28;
 }
 
-.locked{
+.locked {
     background-color: #f5c16c;
     color: #4a3b28;
     border-radius: 0.5rem;
@@ -128,14 +135,39 @@ main{
     box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
 }
 
-.lock-btn.locked{
+.lock-btn.locked {
     cursor: default;
     background-color: transparent;
     color: #4a3b28;
 }
 
-/*Reload Button*/
-#reload-meals{
+/* View Recipe Button */
+.view-recipe-btn {
+    background-color: #f5c16c;
+    color: #4a3b28;
+    font-weight: bold;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    margin-right: 1rem; /* Space between the recipe button and lock button */
+}
+
+.view-recipe-btn:hover {
+    background-color: #e4b458;
+}
+
+.view-recipe-btn:active {
+    background-color: #e6982e;
+}
+
+/* Space Between Buttons */
+.lock-btn + .view-recipe-btn {
+    margin-left: 1rem; /* Adds space between lock and recipe buttons */
+}
+
+/* Reload Button Styling */
+#reload-meals {
     margin-top: 2rem;
     background-color: #f5c16c;
     border: none;
@@ -147,12 +179,12 @@ main{
     color: #4a3b28;
 }
 
-#reload-meals:hover{
+#reload-meals:hover {
     background-color: #e4b458;
 }
 
-/*Footer*/
-.footer{
+/* Footer Styling */
+.footer {
     background-color: #f5c16c;
     text-align: center;
     padding: 1rem;
