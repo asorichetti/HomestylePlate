@@ -1,0 +1,161 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #fef9e7;
+    background-image: radial-gradient(#e4d6a7 1px, transparent 1px);
+    background-size: 25px 25px;
+    background-attachment: fixed;
+    color: #4a3b28;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    background-color: #f5c16c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+}
+
+.logo a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo-img {
+    height: 5rem;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #4a3b28;
+    font-weight: bold;
+}
+
+.nav-links a:hover {
+    text-decoration: underline;
+}
+
+/*Main Content*/
+main{
+    flex: 1;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/*Meals List*/
+#meals-list{
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    width: 100%;
+    max-width: 800px
+}
+
+.meal-entry{
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border: 2px solid #4a3b28;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    gap: 1.5rem;
+    position: relative;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/*Square Image Crop*/
+.meal-image{
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    border: 2px solid #f5c16c;
+    object-position: center;
+}
+
+/*Meal Name Link*/
+.meal-entry a{
+    font-weight: bold;
+    color: #4a3b28;
+    text-decoration: none;
+    background-color: #f5c16c;
+    padding: 0.25rem 0.5rem;
+    border-radius: 0.5rem;
+}
+
+.meal-entry a:hover{
+    text-decoration: underline;
+}
+
+/*Lock Button*/
+.lock-btn{
+    margin-left: auto;
+    background-color: #f5c16c;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #4a3b28;
+}
+
+.locked{
+    background-color: #f5c16c;
+    color: #4a3b28;
+    border-radius: 0.5rem;
+    border: 2px solid #d4a43f;
+    font-weight: bold;
+    padding: 0.5rem;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.lock-btn.locked{
+    cursor: default;
+    background-color: transparent;
+    color: #4a3b28;
+}
+
+/*Reload Button*/
+#reload-meals{
+    margin-top: 2rem;
+    background-color: #f5c16c;
+    border: none;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    color: #4a3b28;
+}
+
+#reload-meals:hover{
+    background-color: #e4b458;
+}
+
+/*Footer*/
+.footer{
+    background-color: #f5c16c;
+    text-align: center;
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #4a3b28;
+}
