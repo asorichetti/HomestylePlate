@@ -1,11 +1,10 @@
-/* Global Reset */
+/* Reset & Base Styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* General Styling */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #fef9e7;
@@ -18,7 +17,7 @@ body {
     flex-direction: column;
 }
 
-/* Navbar Styling */
+/* Navbar */
 .navbar {
     background-color: #f5c16c;
     display: flex;
@@ -55,7 +54,7 @@ body {
     text-decoration: underline;
 }
 
-/* Main Content */
+/* Main Layout */
 main {
     flex: 1;
     padding: 2rem;
@@ -64,7 +63,7 @@ main {
     align-items: center;
 }
 
-/* Meal List */
+/* Meals List Container */
 #meals-list {
     display: flex;
     flex-direction: column;
@@ -73,100 +72,85 @@ main {
     max-width: 800px;
 }
 
-/* Meal Card Entry */
+/* Individual Meal Entry Card */
 .meal-entry {
     display: flex;
-    align-items: center;
-    background-color: white;
-    border: 2px solid #4a3b28;
-    border-radius: 0.5rem;
+    align-items: flex-start;
+    gap: 1rem;
     padding: 1rem;
-    gap: 1.5rem;
-    position: relative;
-    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid #4a3b28;
+    border-radius: 10px;
+    background-color: rgba(255, 248, 225, 0.5);
+    max-width: 600px;
+    min-width: 600px;
+    margin: 0 auto;
 }
 
-/* Image Styling (Square Crop) */
+/* Square Meal Image */
 .meal-image {
     width: 150px;
     height: 150px;
     object-fit: cover;
-    border-radius: 0.5rem;
+    border-radius: 5px;
     border: 2px solid #f5c16c;
-    object-position: center;
+    flex-shrink: 0;
 }
 
-/* Meal Name Styling */
-.meal-entry a {
+/* Right Side Content */
+.meal-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: calc(100% - 150px - 1rem);
+}
+
+/* Meal Title */
+.meal-title {
+    font-size: 1.25rem;
     font-weight: bold;
-    color: #4a3b28;
-    text-decoration: none;
-    background-color: #f5c16c;
-    padding: 0.25rem 1rem;
-    border-radius: 0.5rem;
-    flex: 1;
-    text-align: left;
+    margin-bottom: 0.75rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.2;
 }
 
-/* Hover Effect for Meal Name */
-.meal-entry a:hover {
-    text-decoration: underline;
+/* Button Container */
+.meal-buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
-/* Lock Button Styling */
+/* Styled Buttons */
+.view-recipe-btn,
 .lock-btn {
-    margin-left: auto;
-    background-color: #f5c16c;
-    border: none;
-    padding: 0.5rem 0.75rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    font-weight: bold;
-    color: #4a3b28;
-}
-
-.locked {
-    background-color: #f5c16c;
-    color: #4a3b28;
-    border-radius: 0.5rem;
-    border: 2px solid #d4a43f;
-    font-weight: bold;
-    padding: 0.5rem;
-    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
-}
-
-.lock-btn.locked {
-    cursor: default;
-    background-color: transparent;
-    color: #4a3b28;
-}
-
-/* View Recipe Button */
-.view-recipe-btn {
-    background-color: #f5c16c;
-    color: #4a3b28;
-    font-weight: bold;
-    border: none;
     padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
+    border: none;
+    background-color: #f5c16c;
+    color: #4a3b28;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    text-align: center;
     cursor: pointer;
-    margin-right: 1rem; /* Space between the recipe button and lock button */
 }
 
-.view-recipe-btn:hover {
-    background-color: #e4b458;
+.view-recipe-btn:hover,
+.lock-btn:hover {
+    background-color: #e0a84d;
 }
 
-.view-recipe-btn:active {
-    background-color: #e6982e;
+/* Locked Style */
+.lock-btn.locked {
+    background-color: transparent;
+    border: 2px solid #d4a43f;
+    box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+    cursor: default;
 }
 
-/* Space Between Buttons */
-.lock-btn + .view-recipe-btn {
-    margin-left: 1rem; /* Adds space between lock and recipe buttons */
-}
-
-/* Reload Button Styling */
+/* Reload Button */
 #reload-meals {
     margin-top: 2rem;
     background-color: #f5c16c;
@@ -183,7 +167,7 @@ main {
     background-color: #e4b458;
 }
 
-/* Footer Styling */
+/* Footer */
 .footer {
     background-color: #f5c16c;
     text-align: center;

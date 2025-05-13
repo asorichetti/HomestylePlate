@@ -67,40 +67,61 @@ document.addEventListener('DOMContentLoaded', () => {
     // Create a meal card element
     function createMealCard(meal) {
         const card = document.createElement('div');
-        card.classList.add('meal-card');
-
-        // Square image with cropping
+        card.classList.add('meal-entry');
+    
+        // Image on the left
         const img = document.createElement('img');
         img.src = meal.image_url;
         img.alt = meal.name;
         img.classList.add('meal-image');
-
-        const name = document.createElement('h3');
-        name.textContent = meal.name;
-
+    
+        // Right content block
+        const content = document.createElement('div');
+        content.classList.add('meal-content');
+    
+        // Meal title
+        const title = document.createElement('div');
+        title.classList.add('meal-title');
+        title.textContent = meal.name;
+    
+        // Buttons container
+        const buttonGroup = document.createElement('div');
+        buttonGroup.classList.add('meal-buttons');
+    
+        // View Recipe button (styled link)
         const link = document.createElement('a');
         link.href = meal.recipe_link;
         link.textContent = 'View Recipe';
         link.target = '_blank';
         link.rel = 'noopener';
-
+        link.classList.add('view-recipe-btn');
+    
+        // Lock/Unlock button
         const lockBtn = document.createElement('button');
         lockBtn.classList.add('lock-btn');
         lockBtn.textContent = 'Lock';
+    
+        // Append buttons
+        buttonGroup.appendChild(link);
+        buttonGroup.appendChild(lockBtn);
+    
+        // Assemble content
+        content.appendChild(title);
+        content.appendChild(buttonGroup);
+    
+        // Assemble card
         card.appendChild(img);
-        card.appendChild(name);
-        card.appendChild(link);
-        card.appendChild(lockBtn);
-
-        // Lock button toggle functionality
+        card.appendChild(content);
+    
+        // Lock toggle logic
         lockBtn.addEventListener('click', () => {
             meal.locked = !meal.locked;
             lockBtn.classList.toggle('locked', meal.locked);
             lockBtn.textContent = meal.locked ? 'Unlock' : 'Lock';
-
+    
             const currentLocked = getLockedMeals();
             if (meal.locked) {
-                meal.source = meal.source || (meal.name.includes('HF') ? 'HF_Meal' : 'P3_Meal'); // Set source if not present
+                meal.source = meal.source || (meal.name.includes('HF') ? 'HF_Meal' : 'P3_Meal');
                 currentLocked.push(meal);
             } else {
                 const index = currentLocked.findIndex(m => m.name === meal.name);
@@ -108,9 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             saveLockedMeals(currentLocked);
         });
-
+    
         return card;
     }
+    
 
     // Event listener for the reload button
     reloadButton.addEventListener('click', () => {
