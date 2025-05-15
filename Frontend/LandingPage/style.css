@@ -1,11 +1,11 @@
-/*Reset page*/
-*{
+/* Reset page */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/*Background*/
+/* Background */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #fef9e7;
@@ -18,15 +18,17 @@ body {
     flex-direction: column;
 }
 
+/* Navbar */
 .navbar {
     background-color: #f5c16c;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 1rem 2rem;
+    position: relative; /* Ensure nav-links position correctly */
 }
 
-.logo a{
+.logo a {
     display: flex;
     align-items: center;
     gap: 10px;
@@ -34,17 +36,17 @@ body {
     color: inherit;
 }
 
-.logo-img{
+.logo-img {
     height: 5rem;
 }
 
-.nav-links{
+.nav-links {
     list-style: none;
     display: flex;
     gap: 2rem;
 }
 
-.nav-links a{
+.nav-links a {
     text-decoration: none;
     color: #4a3b28;
     font-weight: bold;
@@ -54,7 +56,33 @@ body {
     text-decoration: underline;
 }
 
-.landing{
+/* Hamburger Menu Button */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 22px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1100;
+    transition: transform 0.3s ease;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 100%;
+    height: 4px;
+    background: #4a3b28;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    transform-origin: 1px;
+}
+
+/* Landing Page */
+.landing {
     flex: 1;
     display: flex;
     align-items: center;
@@ -63,32 +91,113 @@ body {
     padding: 2rem;
 }
 
-.intro h2{
+.intro h2 {
     font-size: 2.5rem;
     margin-bottom: 1rem;
 }
 
-.intro p{
+.intro p {
     font-size: 1.2rem;
     margin-bottom: 2rem;
 }
 
-.cta-button{
+/* Button Group for CTAs */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.cta-button {
     background-color: #f5c16c;
     color: #4a3b28;
-    margin: 4rem;
     padding: 0.75rem 1.5rem;
     text-decoration: none;
     font-weight: bold;
     border-radius: 10px;
     transition: background-color 0.3s;
+    min-width: 200px;
+    text-align: center;
 }
 
-.cta-button:hover{
+.cta-button:hover {
     background-color: #e0a84b;
 }
 
-.footer{
+/* Responsive Layout */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+        z-index: 2200;
+    }
+
+    .nav-links {
+        display: none; /* Hidden by default on small screens */
+        position: absolute;
+        top: 100%;
+        right: 0;
+        width: 200px;
+        background-color: #f5c16c;
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 1rem 1.5rem;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+        border-radius: 0 0 0 10px;
+    }
+
+    .nav-links.active {
+        display: flex;
+        transform: translateX(0);
+    }
+
+    .nav-links li {
+        width: 100%;
+    }
+
+    .nav-links a {
+        font-size: 1.2rem;
+        display: block;
+        width: 100%;
+        color: #4a3b28;
+    }
+
+    .nav-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* Hamburger lines transform to X when active */
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(-6px, 5px);
+    }
+}
+
+@media (max-width: 600px) {
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .cta-button {
+        width: 80%;
+        max-width: 300px;
+    }
+}
+
+/* Footer */
+.footer {
     background-color: #f5c16c;
     text-align: center;
     padding: 1rem;
