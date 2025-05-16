@@ -149,6 +149,6 @@ VALUES
 (54,3,'Sous Vide New York Steak with Homemade Chimichurri','https://sousvideways.com/sous-vide-steak-chimichurri/','https://cdn.shortpixel.ai/spai/w_1380+q_glossy+ret_img+to_webp/sousvideways.com/wp-content/uploads/2019/11/NY-Strip-steak-sous-vide.jpg'),
 (55,4,'Sriracha Hoisin Ground Pork Bowls','https://mealplanaddict.com/sriracha-hoisin-ground-pork-bowls/','https://mealplanaddict.com/wp-content/uploads/2019/02/sriracha-hoisin-ground-pork-bowls-4.jpg.webp'),
 (56,4,'Teriyaki Salmon with Bok Choy One Pan Dinner','https://vikalinka.com/salmon-teriyaki-with-bok-choy-one-pan-dinner/','https://vikalinka.com/wp-content/uploads/2017/05/salmon-teriyaki-7-Edit.jpg'),
-(57,4,'Stuffed Flank Steak','https://makethefirstbitecount.wordpress.com/recipes/beef-recipes/stuffed-flank-steak/','https://makethefirstbitecount.wordpress.com/wp-content/uploads/2013/10/stuffed-flank-steak2.jpg');
-(58,2,'Winter Vegetable Stew','https://www.williams-sonoma.com/recipe/winter-vegetable-stew.html','https://assets.wsimgs.com/wsimgs/rk/images/dp/recipe/202508/0009/img61l.jpg'),
+(57,4,'Stuffed Flank Steak','https://makethefirstbitecount.wordpress.com/recipes/beef-recipes/stuffed-flank-steak/','https://makethefirstbitecount.wordpress.com/wp-content/uploads/2013/10/stuffed-flank-steak2.jpg'),
+(58,2,'Winter Vegetable Stew','https://www.williams-sonoma.com/recipe/winter-vegetable-stew.html','https://assets.wsimgs.com/wsimgs/rk/images/dp/recipe/202508/0009/img61l.jpg');
 
