@@ -1,12 +1,15 @@
-import sqlite3
+import psycopg2
 import tkinter as tk
 from tkinter import ttk, messagebox
 
-# Connect to Dessert Database #
-DB_FILE = 'Backend/GoCode/dessert-backend/dessert.db'
+
 
 def get_connection():
-    return sqlite3.connect(DB_FILE)
+    return psycopg2.connect(
+        dbname='desserts',
+        user='alexsorichetti',
+        host='localhost'
+    )
 
 # Tooltip Helper Class #
 class ToolTip:
@@ -220,7 +223,7 @@ class DessertAdminApp:
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO Desserts (name, image_url, ingredients, bake_time, recipe_link) VALUES (?, ?, ?, ?, ?)",
+            "INSERT INTO Desserts (name, image_url, ingredients, bake_time, recipe_link) VALUES (%s, %s, %s, %s, %s)",
             (name, image, ingredients, bake_time, recipe)
         )
         conn.commit()
@@ -245,7 +248,7 @@ class DessertAdminApp:
         conn = get_connection()
         cursor = conn.cursor()
         cursor.execute(
-            "UPDATE Desserts SET name=?, image_url=?, ingredients=?, bake_time=?, recipe_link=? WHERE id=?",
+            "UPDATE Desserts SET name=%s, image_url=%s, ingredients=%s, bake_time=%s, recipe_link=%s WHERE id=%s",
             (name, image, ingredients, bake_time, recipe, record_id)
         )
         conn.commit()
@@ -261,7 +264,7 @@ class DessertAdminApp:
         record_id = self.tree.item(selected_item)["values"][0]
         conn = get_connection()
         cursor = conn.cursor()
-        cursor.execute("DELETE FROM Desserts WHERE id=?", (record_id,))
+        cursor.execute("DELETE FROM Desserts WHERE id=%s", (record_id,))
         conn.commit()
         conn.close()
         self.load_data()
