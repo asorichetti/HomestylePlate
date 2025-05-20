@@ -1,11 +1,15 @@
-import sqlite3
+import psycopg2
 import tkinter as tk
 from tkinter import ttk, messagebox
 
 # Connect to Database #
-DB_FILE = 'Backend/Meals.db'
 def get_connection():
-    return sqlite3.connect(DB_FILE)
+    return psycopg2.connect(
+        dbname='meals',
+        user='alexsorichetti',
+        host='localhost'
+    )
+
 
 # Tooltip Helper Class #
 class ToolTip:
@@ -37,6 +41,26 @@ class MealAdminApp:
         self.table_name = tk.StringVar(value="HF_Meal")
         self.setup_widgets()
         self.load_data()
+        # Reset sequence once on startup
+        table = self.table_name.get()
+        id_column = "HFMealID" if table == "HF_Meal" else "P3MealID"
+        self.reset_sequence()
+
+    # Reset PostgreSQL sequence #
+    def reset_sequence(self):
+        table = self.table_name.get()
+        id_column = "HFMealID" if table == "HF_Meal" else "P3MealID"
+        conn = get_connection()
+        cursor = conn.cursor()
+        query = f"""
+            SELECT setval(
+                pg_get_serial_sequence('"{table}"', '{id_column}'),
+                (SELECT MAX("{id_column}") FROM "{table}")
+            )
+            """
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
 
     # Widget Creation #
     def setup_widgets(self):
@@ -154,7 +178,8 @@ class MealAdminApp:
             self.tree.delete(row)
 
         # Query the Selected Table #
-        query = f"SELECT * FROM {table}"
+        id_column = "HFMealID" if table == "HF_Meal" else "P3MealID"
+        query = f'SELECT * FROM "{table}" ORDER BY "{id_column}" ASC'
         cursor.execute(query)
         rows = cursor.fetchall()
 
@@ -198,7 +223,7 @@ class MealAdminApp:
         cursor = conn.cursor()
 
         # Insert New Record into the Selected Table #
-        query = f"INSERT INTO {table} (HFMealName, HFMealRating, RecipeLink, PhotoLink) VALUES (?, ?, ?, ?)" if table == "HF_Meal" else f"INSERT INTO {table} (P3MealName, P3MealRating, RecipeLink, PhotoLink) VALUES (?, ?, ?, ?)"
+        query = f'INSERT INTO "{table}" ("HFMealName", "HFMealRating", "RecipeLink", "PhotoLink") VALUES (%s, %s, %s, %s)' if table == "HF_Meal" else f'INSERT INTO "{table}" ("P3MealName", "P3MealRating", "RecipeLink", "PhotoLink") VALUES (%s, %s, %s, %s)'
         cursor.execute(query, (name, rating, recipe_link, photo_link))
         conn.commit()
 
@@ -228,7 +253,7 @@ class MealAdminApp:
         cursor = conn.cursor()
 
         # Update Selected Record #
-        query = f"UPDATE {table} SET HFMealName=?, HFMealRating=?, RecipeLink=?, PhotoLink=? WHERE HFMealID=?" if table == "HF_Meal" else f"UPDATE {table} SET P3MealName=?, P3MealRating=?, RecipeLink=?, PhotoLink=? WHERE P3MealID=?"
+        query = f'UPDATE "{table}" SET "HFMealName"=%s, "HFMealRating"=%s, "RecipeLink"=%s, "PhotoLink"=%s WHERE "HFMealID"=%s' if table == "HF_Meal" else f'UPDATE "{table}" SET "P3MealName"=%s, "P3MealRating"=%s, "RecipeLink"=%s, "PhotoLink"=%s WHERE "P3MealID"=%s'
         cursor.execute (query, (name, rating, recipe_link, photo_link, record_id))
         conn.commit()
         conn.close()
@@ -249,11 +274,14 @@ class MealAdminApp:
         cursor = conn.cursor()
 
         # Delete the Record #
-        query = f"DELETE FROM {table} WHERE HFMealID=?" if table == "HF_Meal" else f"DELETE FROM {table} WHERE P3MealID=?"
+        query = f'DELETE FROM "{table}" WHERE "HFMealID"=%s' if table == "HF_Meal" else f'DELETE FROM "{table}" WHERE "P3MealID"=%s'
         cursor.execute(query, (record_id,))
         conn.commit()
         conn.close()
         self.load_data()
+        id_column = "HFMealID" if table == "HF_Meal" else "P3MealID"
+        self.reset_sequence()
+
 
     def clear_form(self):
         # Clear the Form Fields After Adding or Editing #
