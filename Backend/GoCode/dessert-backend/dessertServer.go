@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	_ "github.com/mattn/go-sqlite3"
+	_ "github.com/lib/pq"
 )
 
 type Dessert struct {
@@ -22,14 +22,16 @@ var db *sql.DB
 
 func initDB() {
 	var err error
-	db, err = sql.Open("sqlite3", "./dessert.db")
+	const dbConn = "user=alexsorichetti dbname=desserts sslmode=disable"
+	db, err = sql.Open("postgres", dbConn)
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal("Database connection failed:", err)
 	}
 
+	//Checks if table already exists, if it does not, table will be created.
 	createTable := `
-	CREATE TABLE IF NOT EXISTS desserts(
-		id INTEGER PRIMARY KEY AUTOINCREMENT,
+	CREATE TABLE IF NOT EXISTS desserts (
+		id SERIAL PRIMARY KEY,
 		name TEXT,
 		image_url TEXT,
 		ingredients TEXT,
