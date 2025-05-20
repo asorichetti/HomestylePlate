@@ -11,11 +11,11 @@ import (
 	"strings"
 	"time"
 
-	_ "modernc.org/sqlite"
+	_ "github.com/lib/pq"
 )
 
 // Database path
-const dbPath = "./Backend/Meals.db"
+const dbConn = "user=alexsorichetti dbname=meals sslmode=disable"
 
 // Meal represents a single meal record returned to the frontend
 type Meal struct {
@@ -102,7 +102,7 @@ func mealServer(w http.ResponseWriter, r *http.Request) {
 	// Enable CORS
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	db, err := sql.Open("sqlite", dbPath)
+	db, err := sql.Open("postgres", dbConn)
 	if err != nil {
 		http.Error(w, "Failed to connect to database", http.StatusInternalServerError)
 		return
