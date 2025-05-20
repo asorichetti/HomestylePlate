@@ -29,9 +29,9 @@ type Meal struct {
 func getMeals(db *sql.DB, table string) ([]Meal, error) {
 	var query string
 	if table == "HF_Meal" {
-		query = "SELECT HFMealName, HFMealRating, PhotoLink, RecipeLink FROM HF_Meal"
+		query = `SELECT "HFMealName", "HFMealRating", "PhotoLink", "RecipeLink" FROM "HF_Meal"`
 	} else if table == "P3_Meal" {
-		query = "SELECT P3MealName, P3MealRating, PhotoLink, RecipeLink FROM P3_Meal"
+		query = `SELECT "P3MealName", "P3MealRating", "PhotoLink", "RecipeLink" FROM "P3_Meal"`
 	} else {
 		return nil, fmt.Errorf("invalid table name: %s", table)
 	}
