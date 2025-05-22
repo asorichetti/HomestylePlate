@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let meals = [];
 
     // Fetch meals from backend on page load
-    fetch('http://localhost:8080/meals?type=HF_Meal:4,P3_Meal:4')
+    fetch('http://backend:8080/meals?type=HF_Meal:4,P3_Meal:4')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Failed to fetch meals: ${response.status}`);

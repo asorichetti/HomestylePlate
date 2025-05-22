@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   frontend:
     build:
@@ -9,24 +7,35 @@ services:
     ports:
       - "3000:80"
     depends_on:
-      - backend
+      - meals-backend
+      - desserts-backend
     restart: unless-stopped
 
-  backend:
+  meals-backend:
     build:
-      context: ./Backend
+      context: ./Backend/GoCode
       dockerfile: Dockerfile
-    container_name: mealrandomizer-backend
+    container_name: mealrandomizer-meals-backend
     environment:
       MEALS_DB_CONN: "postgres://alexsorichetti:mealpass@meals-db:5432/meals?sslmode=disable"
-      DESSERTS_DB_CONN: "postgres://alexsorichetti:dessertpass@desserts-db:5432/desserts?sslmode=disable"
     ports:
       - "8080:8080"
     depends_on:
       - meals-db
-      - desserts-db
     restart: unless-stopped
 
+  desserts-backend:
+    build:
+      context: ./Backend/GoCode/dessert-backend
+      dockerfile: Dockerfile
+    container_name: mealrandomizer-desserts-backend
+    environment:
+      DESSERTS_DB_CONN: "postgres://alexsorichetti:dessertpass@desserts-db:5432/desserts?sslmode=disable"
+    ports:
+      - "8081:8080"
+    depends_on:
+      - desserts-db
+    restart: unless-stopped
   meals-db:
     image: postgres:17
     container_name: meals-db
@@ -38,6 +47,7 @@ services:
       - "5433:5432"
     volumes:
       - meals_data:/var/lib/postgresql/data
+      - ./Backend/initdb/meals_dump.sql:/docker-entrypoint-initdb.d/init.sql:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U alexsorichetti -d meals"]
@@ -56,6 +66,7 @@ services:
       - "5434:5432"
     volumes:
       - desserts_data:/var/lib/postgresql/data
+      - ./Backend/initdb/desserts_dump.sql:/docker-entrypoint-initdb.d/init.sql:ro
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U alexsorichetti -d desserts"]
