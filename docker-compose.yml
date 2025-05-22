@@ -3,14 +3,14 @@ version: '3.8'
 services:
   frontend:
     build:
-      context: ./Frontend 
+      context: ./Frontend
       dockerfile: Dockerfile
     container_name: mealrandomizer-frontend
     ports:
       - "3000:80"
     depends_on:
       - backend
-  
+    restart: unless-stopped
 
   backend:
     build:
@@ -25,7 +25,8 @@ services:
     depends_on:
       - meals-db
       - desserts-db
-  
+    restart: unless-stopped
+
   meals-db:
     image: postgres:17
     container_name: meals-db
@@ -37,7 +38,13 @@ services:
       - "5433:5432"
     volumes:
       - meals_data:/var/lib/postgresql/data
-  
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alexsorichetti"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   desserts-db:
     image: postgres:17
     container_name: desserts-db
@@ -49,6 +56,12 @@ services:
       - "5434:5432"
     volumes:
       - desserts_data:/var/lib/postgresql/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alexsorichetti"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   meals_data:
