@@ -14,12 +14,12 @@ services:
 
   backend:
     build:
-      context: ./Backend/GoCode
+      context: ./Backend
       dockerfile: Dockerfile
     container_name: mealrandomizer-backend
     environment:
-      MEALS_DB_CONN: "postgres://alexsorichetti:@meals-db:5432/meals?sslmode=disable"
-      DESSERTS_DB_CONN: "postgres://alexsorichetti:@desserts-db:5432/desserts?sslmode=disable"
+      MEALS_DB_CONN: "postgres://alexsorichetti:mealpass@meals-db:5432/meals?sslmode=disable"
+      DESSERTS_DB_CONN: "postgres://alexsorichetti:dessertpass@desserts-db:5432/desserts?sslmode=disable"
     ports:
       - "8080:8080"
     depends_on:
@@ -32,7 +32,7 @@ services:
     container_name: meals-db
     environment:
       POSTGRES_USER: alexsorichetti
-      POSTGRES_PASSWORD: ""
+      POSTGRES_PASSWORD: mealpass
       POSTGRES_DB: meals
     ports:
       - "5433:5432"
@@ -40,7 +40,7 @@ services:
       - meals_data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U alexsorichetti"]
+      test: ["CMD-SHELL", "pg_isready -U alexsorichetti -d meals"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -50,7 +50,7 @@ services:
     container_name: desserts-db
     environment:
       POSTGRES_USER: alexsorichetti
-      POSTGRES_PASSWORD: ""
+      POSTGRES_PASSWORD: dessertpass
       POSTGRES_DB: desserts
     ports:
       - "5434:5432"
@@ -58,7 +58,7 @@ services:
       - desserts_data:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U alexsorichetti"]
+      test: ["CMD-SHELL", "pg_isready -U alexsorichetti -d desserts"]
       interval: 10s
       timeout: 5s
       retries: 5
