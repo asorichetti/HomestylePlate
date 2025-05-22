@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  frontend:
+    image: nginx:alpine
+    container_name: mealrandomizer-frontend
+    volumes:
+      - ./Frontend:/usr/share/nginx/html:ro
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+  
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    container_name: mealrandomizer-backend
+    environment:
+      MEALS_DB_CONN: "postgres://alexsorichetti:@meals-db:5432/meals?sslmode=disable"
+      DESSERTS_DB_CONN: "postgres://alexsorichetti:@desserts-db:5432/desserts?sslmode=disable"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - meals-db
+      - desserts-db
+  
+  meals-db:
+    image: postgres:17
+    container_name: meals-db
+    environment:
+      POSTGRES_USER: alexsorichetti
+      POSTGRES_PASSWORD: ""
+      POSTGRES_DB: meals
+    ports:
+      - "5433:5432"
+    volumes:
+      - meals_data:/var/lib/postgresql/data
+  
+  desserts-db:
+    image: postgres:17
+    container_name: desserts-db
+    environment:
+      POSTGRES_USER: alexsorichetti
+      POSTGRES_PASSWORD: ""
+      POSTGRES_DB: desserts
+    ports:
+      - "5434:5432"
+    volumes:
+      - desserts_data:/var/lib/postgresql/data
+
+volumes:
+  meals_data:
+  desserts_data:
