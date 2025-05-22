@@ -2,10 +2,10 @@ version: '3.8'
 
 services:
   frontend:
-    image: nginx:alpine
+    build:
+      context: ./Frontend 
+      dockerfile: Dockerfile
     container_name: mealrandomizer-frontend
-    volumes:
-      - ./Frontend:/usr/share/nginx/html:ro
     ports:
       - "3000:80"
     depends_on:
@@ -14,8 +14,8 @@ services:
 
   backend:
     build:
-      context: ./backend
-      dockerfile: dockerfile
+      context: ./Backend/GoCode
+      dockerfile: Dockerfile
     container_name: mealrandomizer-backend
     environment:
       MEALS_DB_CONN: "postgres://alexsorichetti:@meals-db:5432/meals?sslmode=disable"
