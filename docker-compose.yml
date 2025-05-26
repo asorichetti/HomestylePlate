@@ -1,0 +1,79 @@
+services:
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: mealrandomizer-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - meals-backend
+      - desserts-backend
+    restart: unless-stopped
+
+  meals-backend:
+    build:
+      context: ./Backend/GoCode
+      dockerfile: Dockerfile
+    container_name: mealrandomizer-meals-backend
+    environment:
+      MEALS_DB_CONN: "postgres://alexsorichetti:mealpass@meals-db:5432/meals?sslmode=disable"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - meals-db
+    restart: unless-stopped
+
+  desserts-backend:
+    build:
+      context: ./Backend/GoCode/dessert-backend
+      dockerfile: Dockerfile
+    container_name: mealrandomizer-desserts-backend
+    environment:
+      DESSERTS_DB_CONN: "postgres://alexsorichetti:dessertpass@desserts-db:5432/desserts?sslmode=disable"
+    ports:
+      - "8081:8080"
+    depends_on:
+      - desserts-db
+    restart: unless-stopped
+  meals-db:
+    image: postgres:17
+    container_name: meals-db
+    environment:
+      POSTGRES_USER: alexsorichetti
+      POSTGRES_PASSWORD: mealpass
+      POSTGRES_DB: meals
+    ports:
+      - "5433:5432"
+    volumes:
+      - meals_data:/var/lib/postgresql/data
+      - ./Backend/initdb/meals_dump.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alexsorichetti -d meals"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  desserts-db:
+    image: postgres:17
+    container_name: desserts-db
+    environment:
+      POSTGRES_USER: alexsorichetti
+      POSTGRES_PASSWORD: dessertpass
+      POSTGRES_DB: desserts
+    ports:
+      - "5434:5432"
+    volumes:
+      - desserts_data:/var/lib/postgresql/data
+      - ./Backend/initdb/desserts_dump.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alexsorichetti -d desserts"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  meals_data:
+  desserts_data:

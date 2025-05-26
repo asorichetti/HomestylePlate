@@ -5,8 +5,31 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentIndex = 0;
     let meals = [];
 
-    // Fetch meals from backend on page load
-    fetch('http://localhost:8080/meals?type=HF_Meal:4,P3_Meal:4')
+    // ----- FORM SUBMISSION HANDLER -----
+    const form = document.getElementById('meal-form');
+    if (form) {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Stop native form post
+
+            const hfInput = form.querySelector('input[name="hf"]');
+            const p3Input = form.querySelector('input[name="p3"]');
+            const hfCount = hfInput ? parseInt(hfInput.value) || 0 : 0;
+            const p3Count = p3Input ? parseInt(p3Input.value) || 0 : 0;
+
+            const query = new URLSearchParams({
+                hf: hfCount,
+                p3: p3Count,
+                reset: 'true'
+            });
+
+            // Use the form action with query string
+            const redirectURL = `${form.action}?${query.toString()}`;
+            window.location.href = redirectURL;
+        });
+    }
+
+    // ----- FETCH AND DISPLAY MEALS -----
+    fetch('http://backend:8080/meals?type=HF_Meal:4,P3_Meal:4')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Failed to fetch meals: ${response.status}`);
@@ -19,7 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 gallery.innerHTML = '<p>No meals found.</p>';
                 return;
             }
-
             renderMeal(currentIndex);
         })
         .catch(error => {
@@ -27,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gallery.innerHTML = '<p>Error loading meals. Please try again later.</p>';
         });
 
-    // Render meal image and link based on current index
+    // ----- RENDER ONE MEAL -----
     function renderMeal(index) {
         const meal = meals[index];
         gallery.innerHTML = '';
@@ -52,19 +74,17 @@ document.addEventListener('DOMContentLoaded', () => {
         gallery.appendChild(card);
     }
 
-    // Move to the next meal
+    // ----- NAVIGATION ARROWS -----
     function nextMeal() {
         currentIndex = (currentIndex + 1) % meals.length;
         renderMeal(currentIndex);
     }
 
-    // Move to the previous meal
     function prevMeal() {
         currentIndex = (currentIndex - 1 + meals.length) % meals.length;
         renderMeal(currentIndex);
     }
 
-    // Event listeners for arrow buttons
-    leftArrow.addEventListener('click', prevMeal);
-    rightArrow.addEventListener('click', nextMeal);
+    leftArrow?.addEventListener('click', prevMeal);
+    rightArrow?.addEventListener('click', nextMeal);
 });

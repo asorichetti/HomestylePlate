@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
+	"time"
 
 	_ "github.com/lib/pq"
 )
@@ -22,13 +24,29 @@ var db *sql.DB
 
 func initDB() {
 	var err error
-	const dbConn = "user=alexsorichetti dbname=desserts sslmode=disable"
-	db, err = sql.Open("postgres", dbConn)
-	if err != nil {
-		log.Fatal("Database connection failed:", err)
+	dbConn := os.Getenv("DESSERTS_DB_CONN")
+	if dbConn == "" {
+		log.Fatal("DESSERTS_DB_CONN environment variable is not set")
 	}
 
-	//Checks if table already exists, if it does not, table will be created.
+	// Retry connecting to DB up to 5 times with 2 second intervals
+	for i := 0; i < 5; i++ {
+		db, err = sql.Open("postgres", dbConn)
+		if err == nil {
+			err = db.Ping()
+			if err == nil {
+				log.Println("Connected to database successfully")
+				break
+			}
+		}
+		log.Println("Waiting for DB to be ready... retrying in 2 seconds")
+		time.Sleep(2 * time.Second)
+	}
+
+	if err != nil {
+		log.Fatal("Database connection failed after retries:", err)
+	}
+
 	createTable := `
 	CREATE TABLE IF NOT EXISTS desserts (
 		id SERIAL PRIMARY KEY,
@@ -38,6 +56,7 @@ func initDB() {
 		bake_time TEXT,
 		recipe_link TEXT
 	);`
+
 	_, err = db.Exec(createTable)
 	if err != nil {
 		log.Fatal("Failed to create table:", err)

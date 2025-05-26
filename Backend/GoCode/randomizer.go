@@ -7,15 +7,13 @@ import (
 	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 	"time"
 
 	_ "github.com/lib/pq"
 )
-
-// Database path
-const dbConn = "user=alexsorichetti dbname=meals sslmode=disable"
 
 // Meal represents a single meal record returned to the frontend
 type Meal struct {
@@ -28,11 +26,12 @@ type Meal struct {
 // getMeals fetches all meals from a specified table
 func getMeals(db *sql.DB, table string) ([]Meal, error) {
 	var query string
-	if table == "HF_Meal" {
+	switch table {
+	case "HF_Meal":
 		query = `SELECT "HFMealName", "HFMealRating", "PhotoLink", "RecipeLink" FROM "HF_Meal"`
-	} else if table == "P3_Meal" {
+	case "P3_Meal":
 		query = `SELECT "P3MealName", "P3MealRating", "PhotoLink", "RecipeLink" FROM "P3_Meal"`
-	} else {
+	default:
 		return nil, fmt.Errorf("invalid table name: %s", table)
 	}
 
@@ -102,9 +101,16 @@ func mealServer(w http.ResponseWriter, r *http.Request) {
 	// Enable CORS
 	w.Header().Set("Access-Control-Allow-Origin", "*")
 
-	db, err := sql.Open("postgres", dbConn)
+	connStr := os.Getenv("MEALS_DB_CONN")
+	if connStr == "" {
+		http.Error(w, "MEALS_DB_CONN environment variable not set", http.StatusInternalServerError)
+		return
+	}
+
+	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		http.Error(w, "Failed to connect to database", http.StatusInternalServerError)
+		log.Printf("DB connection error: %v", err)
 		return
 	}
 	defer db.Close()
@@ -146,6 +152,6 @@ func mealServer(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/meals", mealServer)
-	fmt.Println("Server running on port 8080")
+	fmt.Println("Meal API server running on port 8080")
 	log.Fatal(http.ListenAndServe(":8080", nil))
 }
