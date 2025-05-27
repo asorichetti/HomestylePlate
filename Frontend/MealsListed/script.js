@@ -3,18 +3,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const reloadButton = document.getElementById('reload-meals');
     const urlParams = new URLSearchParams(window.location.search);
 
-    // Parse reset parameter and clear sessionStorage if needed
     const shouldReset = urlParams.get('reset') === 'true';
     if (shouldReset) {
         console.log('Resetting locked meals from sessionStorage');
         sessionStorage.removeItem('lockedMeals');
     }
 
-    // Parse requested meal counts (default 0)
     const requestedHF = parseInt(urlParams.get('hf')) || 0;
     const requestedP3 = parseInt(urlParams.get('p3')) || 0;
 
-    // Utility: Get locked meals from sessionStorage
     function getLockedMeals() {
         const raw = sessionStorage.getItem('lockedMeals');
         if (!raw) return [];
@@ -25,12 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // Utility: Save locked meals to sessionStorage
     function saveLockedMeals(locked) {
         sessionStorage.setItem('lockedMeals', JSON.stringify(locked));
     }
 
-    // Create meal card element
     function createMealCard(meal, isLocked) {
         const card = document.createElement('div');
         card.classList.add('meal-entry');
@@ -66,28 +61,24 @@ document.addEventListener('DOMContentLoaded', () => {
         buttons.appendChild(lockBtn);
         content.appendChild(title);
         content.appendChild(buttons);
-
         card.appendChild(img);
         card.appendChild(content);
 
-        // Ensure source is defined
-        if (!meal.source) {
-            meal.source = meal.name.includes('HF') ? 'HF_Meal' : 'P3_Meal';
-        }
-
-        // Lock/unlock toggle logic
         lockBtn.addEventListener('click', () => {
             const lockedMeals = getLockedMeals();
             if (isLocked) {
-                const idx = lockedMeals.findIndex(m => m.name === meal.name);
-                if (idx !== -1) {
-                    lockedMeals.splice(idx, 1);
-                    saveLockedMeals(lockedMeals);
-                    fetchMeals();
-                }
+                const updated = lockedMeals.filter(m => m.name !== meal.name);
+                saveLockedMeals(updated);
+                fetchMeals();
             } else {
                 if (!lockedMeals.some(m => m.name === meal.name)) {
-                    lockedMeals.push(meal);
+                    lockedMeals.push({
+                        name: meal.name,
+                        rating: meal.rating,
+                        image_url: meal.image_url,
+                        recipe_link: meal.recipe_link,
+                        source: meal.source
+                    });
                     saveLockedMeals(lockedMeals);
                     fetchMeals();
                 }
@@ -97,7 +88,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return card;
     }
 
-    // Render locked and fetched meals
     function renderMeals(fetchedMeals, lockedMeals) {
         gallery.innerHTML = '';
 
@@ -107,13 +97,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         fetchedMeals.forEach(meal => {
-            meal.locked = false;
             const card = createMealCard(meal, false);
             gallery.appendChild(card);
         });
     }
 
-    // Fetch meals from backend API
     function fetchMeals() {
         const lockedMeals = getLockedMeals();
         const lockedHF = lockedMeals.filter(m => m.source === 'HF_Meal').length;
@@ -122,14 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const neededHF = Math.max(0, requestedHF - lockedHF);
         const neededP3 = Math.max(0, requestedP3 - lockedP3);
 
-        if (neededHF === 0 && neededP3 === 0) {
-            renderMeals([], lockedMeals);
-            return;
-        }
-
         const queryParts = [];
         if (neededHF > 0) queryParts.push(`HF_Meal:${neededHF}`);
         if (neededP3 > 0) queryParts.push(`P3_Meal:${neededP3}`);
+
+        if (queryParts.length === 0) {
+            renderMeals([], lockedMeals);
+            return;
+        }
 
         const apiUrl = `http://localhost:8080/meals?type=${queryParts.join(',')}`;
 
@@ -147,11 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // Reload button
-    reloadButton.addEventListener('click', () => {
-        fetchMeals();
-    });
+    reloadButton?.addEventListener('click', fetchMeals);
 
-    // Initial fetch
     fetchMeals();
 });
