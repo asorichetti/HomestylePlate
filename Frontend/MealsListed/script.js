@@ -64,11 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         card.appendChild(img);
         card.appendChild(content);
 
-        if (!meal.source) {
-            // Infer source from previous knowledge
-            meal.source = meal.name.includes('HF') ? 'HF_Meal' : 'P3_Meal';
-        }
-
         lockBtn.addEventListener('click', () => {
             const lockedMeals = getLockedMeals();
             if (isLocked) {
@@ -77,7 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 fetchMeals();
             } else {
                 if (!lockedMeals.some(m => m.name === meal.name)) {
-                    lockedMeals.push(meal);
+                    lockedMeals.push({
+                        name: meal.name,
+                        rating: meal.rating,
+                        image_url: meal.image_url,
+                        recipe_link: meal.recipe_link,
+                        source: meal.source
+                    });
                     saveLockedMeals(lockedMeals);
                     fetchMeals();
                 }
@@ -114,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (neededP3 > 0) queryParts.push(`P3_Meal:${neededP3}`);
 
         if (queryParts.length === 0) {
-            renderMeals([], lockedMeals); // All meals already locked
+            renderMeals([], lockedMeals);
             return;
         }
 

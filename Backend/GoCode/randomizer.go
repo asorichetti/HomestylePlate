@@ -21,6 +21,7 @@ type Meal struct {
 	Rating     int    `json:"rating"`
 	PhotoLink  string `json:"image_url"`
 	RecipeLink string `json:"recipe_link"`
+	Source     string `json:"source"`
 }
 
 // getMeals fetches all meals from a specified table
@@ -47,6 +48,7 @@ func getMeals(db *sql.DB, table string) ([]Meal, error) {
 		if err := rows.Scan(&meal.Name, &meal.Rating, &meal.PhotoLink, &meal.RecipeLink); err != nil {
 			return nil, err
 		}
+		meal.Source = table
 		meals = append(meals, meal)
 	}
 	return meals, nil
