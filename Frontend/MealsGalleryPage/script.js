@@ -9,27 +9,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('meal-form');
     if (form) {
         form.addEventListener('submit', (event) => {
-            event.preventDefault(); // Stop native form post
+            event.preventDefault(); // Prevent normal form submission
 
+            // Parse inputs for HF and P3 meal counts
             const hfInput = form.querySelector('input[name="hf"]');
             const p3Input = form.querySelector('input[name="p3"]');
             const hfCount = hfInput ? parseInt(hfInput.value) || 0 : 0;
             const p3Count = p3Input ? parseInt(p3Input.value) || 0 : 0;
 
+            // Clear sessionStorage to reset locked meals for new session
+            sessionStorage.removeItem('lockedMeals');
+
+            // Redirect to MealsListed with counts and reset=true
             const query = new URLSearchParams({
                 hf: hfCount,
                 p3: p3Count,
                 reset: 'true'
             });
 
-            // Use the form action with query string
             const redirectURL = `${form.action}?${query.toString()}`;
             window.location.href = redirectURL;
         });
     }
 
-    // ----- FETCH AND DISPLAY MEALS -----
-    fetch('http://backend:8080/meals?type=HF_Meal:4,P3_Meal:4')
+    // ----- FETCH INITIAL GALLERY MEALS -----
+    fetch('http://localhost:8080/meals?type=HF_Meal:4,P3_Meal:4')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Failed to fetch meals: ${response.status}`);
@@ -49,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gallery.innerHTML = '<p>Error loading meals. Please try again later.</p>';
         });
 
-    // ----- RENDER ONE MEAL -----
+    // ----- RENDER A SINGLE MEAL -----
     function renderMeal(index) {
         const meal = meals[index];
         gallery.innerHTML = '';
@@ -88,3 +92,4 @@ document.addEventListener('DOMContentLoaded', () => {
     leftArrow?.addEventListener('click', prevMeal);
     rightArrow?.addEventListener('click', nextMeal);
 });
+
