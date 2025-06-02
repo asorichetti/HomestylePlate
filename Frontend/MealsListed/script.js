@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const apiUrl = `http://localhost:8080/meals?type=${queryParts.join(',')}`;
+        const apiUrl = `/meals?type=${queryParts.join(',')}`;
 
         fetch(apiUrl)
             .then(res => {

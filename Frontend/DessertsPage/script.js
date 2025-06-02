@@ -16,7 +16,7 @@ let desserts = [];
 
 async function fetchDesserts(){
     try{
-        const res = await fetch("http://localhost:8081/api/desserts");
+        const res = await fetch("/api/desserts");
         const data = await res.json();
         desserts = data;
         renderPage(currentPage);
