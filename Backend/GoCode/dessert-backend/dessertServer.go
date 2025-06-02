@@ -93,6 +93,11 @@ func main() {
 
 	http.HandleFunc("/api/desserts", getDessertsHandler)
 
-	log.Println("Server running at http://localhost:8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("Dessert API server running on port %s\n", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }

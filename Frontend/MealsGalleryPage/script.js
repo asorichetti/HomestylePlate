@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ----- FETCH INITIAL GALLERY MEALS -----
-    fetch('http://localhost:8080/meals?type=HF_Meal:4,P3_Meal:4')
+    fetch('/meals?type=HF_Meal:4,P3_Meal:4')
         .then(response => {
             if (!response.ok) {
                 throw new Error(`Failed to fetch meals: ${response.status}`);
