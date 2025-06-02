@@ -154,6 +154,12 @@ func mealServer(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/meals", mealServer)
-	fmt.Println("Meal API server running on port 8080")
-	log.Fatal(http.ListenAndServe(":8080", nil))
+
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	fmt.Printf("Meal API server running on post %s\n", port)
+	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
