@@ -83,6 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                 }
             }
+
+            isLocked = !isLocked;
+            lockBtn.textContent = isLocked ? 'Unlock' : 'Lock';
+            lockBtn.classList.toggle('locked', isLocked)
         });
 
         return card;
