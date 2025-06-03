@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (isLocked) {
                 const updated = lockedMeals.filter(m => m.name !== meal.name);
                 saveLockedMeals(updated);
-                fetchMeals();
+                
             } else {
                 if (!lockedMeals.some(m => m.name === meal.name)) {
                     lockedMeals.push({
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         source: meal.source
                     });
                     saveLockedMeals(lockedMeals);
-                    fetchMeals();
+                    
                 }
             }
         });

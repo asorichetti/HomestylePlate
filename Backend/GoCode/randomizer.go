@@ -161,5 +161,5 @@ func main() {
 	}
 
 	fmt.Printf("Meal API server running on post %s\n", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
+	log.Fatal(http.ListenAndServe("0.0.0.0:"+port, nil))
 }

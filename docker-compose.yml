@@ -1,15 +1,17 @@
+version: '3.8'
+
 services:
   frontend:
     build:
       context: ./Frontend
       dockerfile: Dockerfile
     container_name: mealrandomizer-frontend
-    ports:
-      - "3000:80"
     depends_on:
       - meals-backend
       - desserts-backend
     restart: unless-stopped
+    networks:
+      - mealnet
 
   meals-backend:
     build:
@@ -24,6 +26,8 @@ services:
     depends_on:
       - meals-db
     restart: unless-stopped
+    networks:
+      - mealnet
 
   desserts-backend:
     build:
@@ -32,12 +36,15 @@ services:
     container_name: mealrandomizer-desserts-backend
     environment:
       DESSERTS_DB_CONN: "postgres://alexsorichetti:dessertpass@desserts-db:5432/desserts?sslmode=disable"
-      PORT: "8080"
+      PORT: "8081"
     ports:
       - "8081:8080"
     depends_on:
       - desserts-db
     restart: unless-stopped
+    networks:
+      - mealnet
+
   meals-db:
     image: postgres:17
     container_name: meals-db
@@ -56,6 +63,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - mealnet
 
   desserts-db:
     image: postgres:17
@@ -75,6 +84,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - mealnet
+
   nginx:
     image: nginx:latest
     container_name: mealrandomizer-nginx
@@ -87,6 +99,13 @@ services:
       - meals-backend
       - desserts-backend
     restart: unless-stopped
+    networks:
+      - mealnet
+
 volumes:
   meals_data:
   desserts_data:
+
+networks:
+  mealnet:
+    driver: bridge
