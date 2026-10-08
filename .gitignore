@@ -1,9 +1,15 @@
 # Build artifacts
 App/build/
+App/build_*
 App/*.db
-*.db
+
+# Release artifacts (downloadable from GitHub Releases)
+releases/
 *.db-wal
 *.db-shm
+
+# Release version file (tracked)
+# App/VERSION
 
 # Python virtual environment
 Backend/venv/
