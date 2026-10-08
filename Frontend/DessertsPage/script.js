@@ -36,7 +36,7 @@ function renderPage(page){
         card.className = "polaroid";
         card.innerHTML = `
             <img src="${dessert.image_url}" alt="${dessert.name}" />
-            <h3>${dessert.name}</h3>
+            <h2>${dessert.name}</h2>
             `;
         card.addEventListener("click", () => openModal(dessert));
         GALLERY.appendChild(card);

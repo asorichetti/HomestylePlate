@@ -1,0 +1,46 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homestyle Plate - Meal Service</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../LandingPage/index.html">
+                 <img src="../images/HomestylePlateLogo.png" alt="Homestyle Kitchen Logo" class="logo-img">
+                 <span class="brand-name">Homestyle Plate</span>
+                </a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="../LandingPage/index.html">Home</a></li>
+                <li><a href="../MealSlotMachine/index.html">Meal Slot Machine</a></li>
+                <li><a href="../DessertsPage/index.html">Desserts Showcase</a></li>
+                <li><a href="../MealsGalleryPage/index.html">Randomized Menu Planner</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main" role="main">
+        <section class="results-section">
+            <h1>Your Selected Meals</h1>
+            <div id="meals-list" class="meals-list"><div class="meal-entry"><img src="https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_500,q_50,w_1900/hellofresh_s3/image/sticky-glazed-chicken-sammies-c4f1a7e7-7ffd3ba4.jpg" alt="Sticky Glazed Chicken Sammies" class="meal-image"><div class="meal-content"><div class="meal-title">Sticky Glazed Chicken Sammies</div><div class="meal-buttons"><a href="https://www.hellofresh.ca/recipes/sticky-glazed-chicken-sammies-6642166ec72b4f891e5413e7" target="_blank" rel="noopener noreferrer" class="view-recipe-btn">View Recipe</a><button class="lock-btn">Lock</button></div></div></div><div class="meal-entry"><img src="https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_1100,q_50,w_2600/hellofresh_s3/image/burgers-au-porc-facon-souvlaki-cb8393aa.jpg" alt="Galactic Pork Souvlaki-Inspired Burgers" class="meal-image"><div class="meal-content"><div class="meal-title">Galactic Pork Souvlaki-Inspired Burgers</div><div class="meal-buttons"><a href="https://www.hellofresh.ca/recipes/galactic-pork-souvlaki-inspired-burgers-64191296c3eebb947e01dbe0" target="_blank" rel="noopener noreferrer" class="view-recipe-btn">View Recipe</a><button class="lock-btn">Lock</button></div></div></div><div class="meal-entry"><img src="https://www.saltandlavender.com/wp-content/uploads/2019/08/beef-bowls-recipe-1-1049x1536.jpg" alt="Easy Beef Bowls" class="meal-image"><div class="meal-content"><div class="meal-title">Easy Beef Bowls</div><div class="meal-buttons"><a href="https://www.saltandlavender.com/easy-beef-bowls/" target="_blank" rel="noopener noreferrer" class="view-recipe-btn">View Recipe</a><button class="lock-btn">Lock</button></div></div></div><div class="meal-entry"><img src="https://www.recipetineats.com/tachyon/2018/05/Pork-Carnitas-1000px.jpg?resize=964%2C1350&amp;zoom=0.67" alt="Pork Carnitas" class="meal-image"><div class="meal-content"><div class="meal-title">Pork Carnitas</div><div class="meal-buttons"><a href="https://www.recipetineats.com/pork-carnitas-mexican-slow-cooker-pulled-pork/" target="_blank" rel="noopener noreferrer" class="view-recipe-btn">View Recipe</a><button class="lock-btn">Lock</button></div></div></div></div>
+        </section>
+        <button id="reload-meals" class="reload-button" aria-label="Reload meals with new options">
+            Reload with New Options
+        </button>
+    </main>
+
+    <footer class="footer">
+        <p>Homestyle Plate; Developed by Alex Sorichetti</p>
+    </footer>
+    <script src="./script.js" defer=""></script>
+    <script src="../GlobalScript/navbar.js"></script>
+
+</body></html>

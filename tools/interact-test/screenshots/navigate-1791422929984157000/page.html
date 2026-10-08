@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homestyle Plate - Desserts Showcase</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <a href="../LandingPage/index.html" aria-label="Homestyle Plate home">
+                 <img src="../images/HomestylePlateLogo.png" alt="Homestyle Kitchen Logo" class="logo-img">
+                 <span class="brand-name">Homestyle Plate</span>
+                </a>
+            </div>
+            <button class="menu-toggle" aria-label="Toggle Navigation Menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-links">
+                <li><a href="../LandingPage/index.html">Home</a></li>
+                <li><a href="../MealSlotMachine/index.html">Meal Slot Machine</a></li>
+                <li><a href="index.html">Desserts Showcase</a></li>
+                <li><a href="../MealsGalleryPage/index.html">Randomized Menu Planner</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="content">
+        <h1 class="page-title">Desserts Showcase</h1>
+        <div id="dessertGallery" class="gallery"><div class="polaroid">
+            <img src="https://res.cloudinary.com/kraft-heinz-whats-cooking-ca/image/upload/f_auto/q_auto/c_limit,w_1920/f_auto/q_auto/v1/dxp-images/brands/Recipes/all-recipe-assets/philadelphia-easter-mini-cheesecakes/generated/PHILADELPHIA-Easter-Mini-Cheesecakes-569868_dboyvc?_a=BAVAfVDW0" alt="PHILADELPHIA Easter Mini Cheesecakes">
+            <h2>PHILADELPHIA Easter Mini Cheesecakes</h2>
+            </div><div class="polaroid">
+            <img src="https://butterwithasideofbread.com/wp-content/uploads/2018/10/Cinnamon-Fried-Apples-21.jpg" alt="Fried Cinnamon Apples">
+            <h2>Fried Cinnamon Apples</h2>
+            </div><div class="polaroid">
+            <img src="https://www.willcookforsmiles.com/wp-content/uploads/2024/12/Apple-pie-bread-pudding-with-ice-cream-cut.jpg" alt="Apple Pie Bread Pudding">
+            <h2>Apple Pie Bread Pudding</h2>
+            </div><div class="polaroid">
+            <img src="https://www.eatwell101.com/wp-content/uploads/2018/05/Keto-strawberry-Cobbler-ever.jpg" alt="Berry Cobbler {Low-Carb, Keto}">
+            <h2>Berry Cobbler {Low-Carb, Keto}</h2>
+            </div><div class="polaroid">
+            <img src="https://res.cloudinary.com/hksqkdlah/image/upload/c_scale,w_200/disqus/oigt0e8eeoivo6ucc5us" alt="Blueberry Scones">
+            <h2>Blueberry Scones</h2>
+            </div><div class="polaroid">
+            <img src="https://aem.lcbo.com/content/dam/lcbo/Recipes/food-drink/2016/summer/201604048.jpg.thumb.1024.1024.jpg" alt="Blueberry-Lavender White Chocolate Cheesecake">
+            <h2>Blueberry-Lavender White Chocolate Cheesecake</h2>
+            </div><div class="polaroid">
+            <img src="https://www.myfussyeater.com/wp-content/uploads/2016/03/Chocolate-Banana-Frozen-Yogurt-Bark_03.jpg" alt="Chocolate Banana Frozen Yogurt Bark">
+            <h2>Chocolate Banana Frozen Yogurt Bark</h2>
+            </div><div class="polaroid">
+            <img src="https://food.fnr.sndimg.com/content/dam/images/food/fullset/2015/5/6/0/FNK_Chocolate-Chia-Pudding_s4x3.jpg.rend.hgtvcom.826.620.suffix/1431018740089.webp" alt="Chocolate-Chia Pudding">
+            <h2>Chocolate-Chia Pudding</h2>
+            </div><div class="polaroid">
+            <img src="https://altonbrown.com/wp-content/uploads/2020/08/Brownies-Reloaded_AB_resized.jpg" alt="Cocoa Brownies: Reloaded">
+            <h2>Cocoa Brownies: Reloaded</h2>
+            </div><div class="polaroid">
+            <img src="https://anorganizedchaos.com/wp-content/uploads/2024/07/0_1-2025-01-17T120505.314.png" alt="Fudgy Brownie Cookies">
+            <h2>Fudgy Brownie Cookies</h2>
+            </div></div>
+
+        <div class="page-controls" id="page-controls">
+            <button id="prev-page" disabled="">Previous</button>
+            <span id="page-number">Page 1 of 4</span>
+            <button id="next-page">Next</button>
+        </div>
+    </main>
+
+    <div class="modal hidden" id="dessertModal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModal">×</span>
+            <h2 id="modalTitle"></h2>
+            <img id="modalImage" alt="Dessert Image">
+            <p><strong>Ingredients:</strong></p>
+            <p id="modalIngredients"></p>
+            <p><strong>Bake Time:</strong> <span id="modalBakeTime"></span></p>
+            <p><a href="#" id="modalRecipeLink" target="_blank">View Full Recipe</a></p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Homestyle Plate; Developed by Alex Sorichetti</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="../GlobalScript/navbar.js"></script>
+
+</body></html>

@@ -1,10 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<!DOCTYPE html><html lang="en"><head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homestyle Plate - Meal Gallery</title>
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
     <header>
@@ -32,28 +30,28 @@
     <main class="main" role="main">
         <div class="gallery-container">
             <!-- Left arrow button to navigate to the previous meal -->
-            <button id="left-arrow" class="arrow-button left">&#8592;</button>
+            <button id="left-arrow" class="arrow-button left">←</button>
 
             <!-- Meal gallery container where the meal images and links will be dynamically inserted -->
-            <div id="meal-gallery" class="meal-gallery"></div>
+            <div id="meal-gallery" class="meal-gallery"><div class="meal-card"><img src="https://img.hellofresh.com/c_fit,f_auto,fl_lossy,h_1100,q_50,w_2600/hellofresh_s3/image/HF_Y24_R1005_W29_CA_RP154726-6_Main_low-0e31bf32.jpg" alt="Bacon, Apple and Cheddar Melts" class="meal-image"><a href="https://www.hellofresh.ca/recipes/bacon-apple-and-cheddar-melts-67b2f662ce706173bfb0f44c" class="meal-link" target="_blank" rel="noopener">Bacon, Apple and Cheddar Melts</a></div></div>
 
             <!-- Right arrow button to navigate to the next meal -->
-            <button id="right-arrow" class="arrow-button right">&#8594;</button>
+            <button id="right-arrow" class="arrow-button right">→</button>
         </div>
          
           
 
         <section class="form-section" aria-labelledby="meal-form-heading">
-            <h1 id="meal-form-heading">Select Meals</h2>
+            <h1 id="meal-form-heading">Select Meals</h1>
             <form id="meal-form" action="../MealsListed/index.html" method="GET">
                 <div class="form-group">
                     <label for="hf-count">Number of HelloFresh meals:</label>
-                    <input type="number" id="hf-count" name="hf" min="1" value="1" aria-describedby="hf-desc" required/>
+                    <input type="number" id="hf-count" name="hf" min="1" value="1" aria-describedby="hf-desc" required="">
                     <small id="hf-desc">Choose how many HelloFresh meals you'd like to receive.</small>
                 </div>
                 <div class="form-group">
                     <label for="p3-count">Number of Paprika3 meals:</label>
-                    <input type="number" id="p3-count" name="p3" min="1" value="1" aria-describedby="p3-desc" required/>
+                    <input type="number" id="p3-count" name="p3" min="1" value="1" aria-describedby="p3-desc" required="">
                     <small id="p3-desc">Choose how many Paprika3 meals you'd like to receive.</small>
                 </div>
                 <button type="submit" id="get-meals" aria-label="Get selected meals">Get Meals</button>
@@ -64,8 +62,9 @@
     <footer class="footer">
         <p>Homestyle Plate; Developed by Alex Sorichetti</p>
     </footer>
-    <script src = "../GlobalScript/navbar.js"></script>
-    <script src="./script.js" defer></script>
+    <script src="../GlobalScript/navbar.js"></script>
+    <script src="./script.js" defer=""></script>
     
-</body>
-</html>
+
+
+</body></html>
