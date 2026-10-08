@@ -1,0 +1,37 @@
+# Build artifacts
+App/build/
+App/*.db
+*.db
+*.db-wal
+*.db-shm
+
+# Python virtual environment
+Backend/venv/
+__pycache__/
+*.pyc
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# npm/node (if ever used)
+node_modules/
+package-lock.json
+
+# Test databases
+test_*.db
+*.sqlite3
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+temp/
