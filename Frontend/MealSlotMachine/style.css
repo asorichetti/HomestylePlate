@@ -84,6 +84,8 @@ body {
   justify-content: center;
   align-items: center;
   width: 100%;
+  padding: 3rem 2rem;
+  min-height: 60vh;
 }
 
 .slot-wrapper {
